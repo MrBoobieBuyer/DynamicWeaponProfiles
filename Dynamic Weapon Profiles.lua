@@ -16,6 +16,8 @@ local Weapon_Vars = {
   No_Reticles = false,
   Extra_Break = false,
   Headshots_Kill 	= false,
+  CQBR_Smg = false,
+  Kil7_HG = false,
   Weapon_Profiles = {
       ["1"] = "None",
       ["2"] = "Better Weapon Balance"
@@ -600,6 +602,11 @@ local function SetAWFWeapon_DMGValues()
     AWF.WeaponData.KIL7.ReticleType = 100000
     AWF.WeaponData.HNDC.ReticleType = 100000
   end
+  if Weapon_Vars.CQBR_Smg then 
+    AWF.WeaponData.CQBR.AmmoType = 112806400
+  end
+  if Weapon_Vars.Kil7_HG then 
+    AWF.WeaponData.KIL7.AmmoType = 112800000
 end
 
 local function apply_changes()
@@ -709,6 +716,12 @@ re.on_draw_ui(function()
 
     if imgui.tree_node("Misc Options") then
       changed, Weapon_Vars.No_Reticles = imgui.checkbox("No Reticles", Weapon_Vars.No_Reticles)
+      was_changed = changed or was_changed
+
+      changed, Weapon_Vars.CQBR_Smg = imgui.checkbox("CQBR Uses SMG Ammo", Weapon_Vars.CQBR_Smg)
+      was_changed = changed or was_changed
+
+      changed, Weapon_Vars.Kil7_HG = imgui.checkbox("Killer 7 Uses HG Ammo", Weapon_Vars.Kil7_HG)
       was_changed = changed or was_changed
 
       imgui.tree_pop()
