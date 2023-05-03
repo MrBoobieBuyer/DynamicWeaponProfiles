@@ -246,20 +246,35 @@ local function SetAWFWeapon_DMGValues()
 
   if Weapon_Vars.Always_Focus then 
     AWF.WeaponData.SG09R.Focus_Limit = 0.0
+    AWF.WeaponData.SG09R.Focus_HoldAdd = 1000
     AWF.WeaponData.PUN.Focus_Limit = 0.0
+    AWF.WeaponData.PUN.Focus_HoldAdd = 1000
     AWF.WeaponData.RED9.Focus_Limit = 0.0
+    AWF.WeaponData.RED9.Focus_HoldAdd = 1000
     AWF.WeaponData.BT.Focus_Limit = 0.0
+    AWF.WeaponData.BT.Focus_HoldAdd = 1000
     AWF.WeaponData.VP70.Focus_Limit = 0.0
+    AWF.WeaponData.VP70.Focus_HoldAdd = 1000
     AWF.WeaponData.SEN9.Focus_Limit = 0.0
+    AWF.WeaponData.SEN9.Focus_HoldAdd = 1000
     AWF.WeaponData.TMP.Focus_Limit = 0.0
+    AWF.WeaponData.TMP.Focus_HoldAdd = 1000
     AWF.WeaponData.CTW.Focus_Limit = 0.0
+    AWF.WeaponData.CTW.Focus_HoldAdd = 1000
     AWF.WeaponData.LE5.Focus_Limit = 0.0
+    AWF.WeaponData.LE5.Focus_HoldAdd = 1000
     AWF.WeaponData.M1G.Focus_Limit = 0.0
+    AWF.WeaponData.M1G.Focus_HoldAdd = 1000
     AWF.WeaponData.SAR.Focus_Limit = 0.0
+    AWF.WeaponData.SAR.Focus_HoldAdd = 1000
     AWF.WeaponData.CQBR.Focus_Limit = 0.0
+    AWF.WeaponData.CQBR.Focus_HoldAdd = 1000
     AWF.WeaponData.BRB.Focus_Limit = 0.0
+    AWF.WeaponData.BRB.Focus_HoldAdd = 1000
     AWF.WeaponData.KIL7.Focus_Limit = 0.0
+    AWF.WeaponData.KIL7.Focus_HoldAdd = 1000
     AWF.WeaponData.HNDC.Focus_Limit = 0.0
+    AWF.WeaponData.HNDC.Focus_HoldAdd = 1000
   end
 
   if Weapon_Vars.No_Ammo_Cost then
