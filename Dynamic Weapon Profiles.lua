@@ -607,6 +607,7 @@ local function SetAWFWeapon_DMGValues()
   end
   if Weapon_Vars.Kil7_HG then 
     AWF.WeaponData.KIL7.AmmoType = 112800000
+  end
 end
 
 local function apply_changes()
