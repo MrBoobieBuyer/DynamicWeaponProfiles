@@ -18,6 +18,8 @@ local Weapon_Vars = {
   Headshots_Kill 	= false,
   CQBR_Smg = false,
   Kil7_HG = false,
+  BRB_HG  = false,
+  HNDC_HG = false,
   Weapon_Profiles = {
       ["1"] = "None",
       ["2"] = "Better Weapon Balance"
@@ -608,6 +610,12 @@ local function SetAWFWeapon_DMGValues()
   if Weapon_Vars.Kil7_HG then 
     AWF.WeaponData.KIL7.AmmoType = 112800000
   end
+  if Weapon_Vars.BRB_HG then
+      AWF.WeaponData.BRB.AmmoType = 112800000
+  end
+  if Weapon_Vars.HNDC_HG then 
+    AWF.WeaponData.HNDC.AmmoType = 112800000
+  end
 end
 
 local function apply_changes()
@@ -722,7 +730,13 @@ re.on_draw_ui(function()
       changed, Weapon_Vars.CQBR_Smg = imgui.checkbox("CQBR Uses SMG Ammo", Weapon_Vars.CQBR_Smg)
       was_changed = changed or was_changed
 
+      changed, Weapon_Vars.BRB_HG = imgui.checkbox("Broken Butterfly Uses HG Ammo", Weapon_Vars.BRB_HG)
+      was_changed = changed or was_changed
+
       changed, Weapon_Vars.Kil7_HG = imgui.checkbox("Killer 7 Uses HG Ammo", Weapon_Vars.Kil7_HG)
+      was_changed = changed or was_changed
+
+      changed, Weapon_Vars.HNDC_HG = imgui.checkbox("Handcannon Uses HG Ammo", Weapon_Vars.HNDC_HG)
       was_changed = changed or was_changed
 
       imgui.tree_pop()
