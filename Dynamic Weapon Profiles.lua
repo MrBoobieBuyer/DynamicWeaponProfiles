@@ -49,7 +49,6 @@ Weapon_Vars = json.load_file("DWP\\Saved.json") or {
   }
 }
 
-local Editor_Selected_Profile = "1"
 local Selected_Weapon = "1"
 local Available_Weapons = {
   ["1"] = "SG-09R",
@@ -2086,7 +2085,7 @@ local function create_new_weapon_profile()
   if new_profile_name ~= nil and new_profile_name ~= '' then
     -- look for existing files
     local tempSG09R = json.load_file("DWP\\" .. new_profile_name .. "\\SG09R.json")
-    
+
     -- if an existing profile folder wasn't found, copy None into the new profile folder
     if not tempSG09R then
       local noneSG09R = json.load_file("DWP\\None\\SG09R.json")
@@ -2138,6 +2137,12 @@ local function create_new_weapon_profile()
     new_profile_name = ""
     json.dump_file("DWP\\Saved.json", Weapon_Vars)
   end
+end
+
+local function get_player_context()
+  local character_manager = sdk.get_managed_singleton(sdk.game_namespace("CharacterManager"))
+  local player_context = character_manager and character_manager:call("getPlayerContextRef")
+  return player_context
 end
 
 -- save the initial values for all guns so they can be reset later
@@ -2287,88 +2292,92 @@ re.on_frame(function()
     scene = sdk.call_native_func(scene_manager, sdk.find_type_definition("via.SceneManager"), "get_CurrentScene")
 
     if scene then
-      if not CS_Inventory then
-        local PlayerInventoryObserver = scene:call("findGameObject(System.String)", "PlayerInventoryObserver")
+      local player = get_player_context()
 
-        if PlayerInventoryObserver then
-          local InventoryObserver = PlayerInventoryObserver:call("getComponent(System.Type)", sdk.typeof("chainsaw.PlayerInventoryObserver"))
-          if InventoryObserver then
-            local Observer = InventoryObserver:get_field("_Observer")
-            if Observer then
-              local InventoryController = Observer:get_field("_InventoryController")
+      if player then
+        if not CS_Inventory then
+          local PlayerInventoryObserver = scene:call("findGameObject(System.String)", "PlayerInventoryObserver")
 
-              if InventoryController then
-                CS_Inventory = InventoryController:get_field("<_CsInventory>k__BackingField")
+          if PlayerInventoryObserver then
+            local InventoryObserver = PlayerInventoryObserver:call("getComponent(System.Type)", sdk.typeof("chainsaw.PlayerInventoryObserver"))
+            if InventoryObserver then
+              local Observer = InventoryObserver:get_field("_Observer")
+              if Observer then
+                local InventoryController = Observer:get_field("_InventoryController")
+
+                if InventoryController then
+                  CS_Inventory = InventoryController:get_field("<_CsInventory>k__BackingField")
+                end
               end
             end
           end
-        end
-      else
-        local InventoryItems = CS_Inventory:get_field("_InventoryItems")
+        else
+          local InventoryItems = CS_Inventory:get_field("_InventoryItems")
 
-        if InventoryItems then
-          local inventory_items = InventoryItems:get_field("_items")
+          if InventoryItems then
+            local inventory_items = InventoryItems:get_field("_items")
 
-          local current_inventory_count = 0;
+            local current_inventory_count = 0;
 
-          for i, ItemID in ipairs(inventory_items) do
-            local WeaponID = ItemID:call("get_WeaponId")
+            for i, ItemID in ipairs(inventory_items) do
+              local WeaponID = ItemID:call("get_WeaponId")
 
-            if WeaponID then
-              current_inventory_count = current_inventory_count + 1
+              if WeaponID then
+                current_inventory_count = current_inventory_count + 1
+              end
             end
+
+            if last_inventory_count > -1 then
+              if current_inventory_count > last_inventory_count then
+                log.info("Something was added to the inventory")
+                log.info("Current: " .. current_inventory_count .. ", Last: " .. last_inventory_count)
+                on_inventory_changed()
+              elseif current_inventory_count < last_inventory_count then
+                log.info("Something was removed from the inventory")
+                log.info("Current: " .. current_inventory_count .. ", Last: " .. last_inventory_count)
+                on_inventory_changed()
+              end
+            end
+
+            last_inventory_count = current_inventory_count
+          end
+        end
+
+        -- adjust red 9 when the stock is equiped or unquiped
+        if RED9_OwnerEquipment then
+          local Current_RED9_Stock = RED9_OwnerEquipment:get_IsExistsStock()
+
+          if RED9_Has_Stock ~= Current_RED9_Stock then
+            log.info("RED9 stock equip changed")
+            AWF.WeaponData.RED9.Changed = true
           end
 
-          if last_inventory_count > -1 then
-            if current_inventory_count > last_inventory_count then
-              log.info("Something was added to the inventory")
-              log.info("Current: " .. current_inventory_count .. ", Last: " .. last_inventory_count)
-              on_inventory_changed()
-            elseif current_inventory_count < last_inventory_count then
-              log.info("Something was removed from the inventory")
-              log.info("Current: " .. current_inventory_count .. ", Last: " .. last_inventory_count)
-              on_inventory_changed()
-            end
+          RED9_Has_Stock = Current_RED9_Stock
+        end
+
+        -- adjust tmp when the stock is equiped or unquiped
+        if TMP_OwnerEquipment then
+          local Current_TMP_Stock = TMP_OwnerEquipment:get_IsExistsStock()
+
+          if TMP_Has_Stock ~= Current_TMP_Stock then
+            log.info("TMP stock equip changed")
+            AWF.WeaponData.TMP.Changed = true
           end
 
-          last_inventory_count = current_inventory_count
-        end
-      end
-
-      -- adjust red 9 when the stock is equiped or unquiped
-      if RED9_OwnerEquipment then
-        local Current_RED9_Stock = RED9_OwnerEquipment:get_IsExistsStock()
-
-        if RED9_Has_Stock ~= Current_RED9_Stock then
-          log.info("RED9 stock equip changed")
-          AWF.WeaponData.RED9.Changed = true
+          TMP_Has_Stock = Current_TMP_Stock
         end
 
-        RED9_Has_Stock = Current_RED9_Stock
-      end
+        -- adjust vp70 when the stock is equiped or unquiped
+        if VP70_OwnerEquipment then
+          local Current_VP70_Stock = VP70_OwnerEquipment:get_IsExistsStock()
 
-      -- adjust tmp when the stock is equiped or unquiped
-      if TMP_OwnerEquipment then
-        local Current_TMP_Stock = TMP_OwnerEquipment:get_IsExistsStock()
+          if VP70_Has_Stock ~= Current_VP70_Stock then
+            log.info("VP70 stock equip changed")
+            AWF.WeaponData.VP70.Changed = true
+          end
 
-        if TMP_Has_Stock ~= Current_TMP_Stock then
-          log.info("TMP stock equip changed")
-          AWF.WeaponData.TMP.Changed = true
+          VP70_Has_Stock = Current_VP70_Stock
         end
-
-        TMP_Has_Stock = Current_TMP_Stock
-      end
-
-      -- adjust vp70 when the stock is equiped or unquiped
-      if VP70_OwnerEquipment then
-        local Current_VP70_Stock = VP70_OwnerEquipment:get_IsExistsStock()
-
-        if VP70_Has_Stock ~= Current_VP70_Stock then
-          log.info("VP70 stock equip changed")
-          AWF.WeaponData.VP70.Changed = true
-        end
-
-        VP70_Has_Stock = Current_VP70_Stock
       end
     end -- end if scene
   end -- end if scene manger
