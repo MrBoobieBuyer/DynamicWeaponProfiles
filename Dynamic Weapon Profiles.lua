@@ -34,6 +34,7 @@ local Weapon_Vars = {
   Kil7_HG = false,
   BRB_HG = false,
   HNDC_HG = false,
+  Harpoon_DMG = false,
   Weapon_Profiles = {
     ["1"] = "None",
     ["2"] = "Better Weapon Balance"
@@ -2018,7 +2019,6 @@ local function draw_profile_editor_ui()
 end
 
 local function apply_harpoon_damage()
-  local damage_multiplier = 100;
   local Harpoon_GameObject = scene:call("findGameObject(System.String)", "wp5406")
 
   if Harpoon_GameObject then
@@ -2040,7 +2040,7 @@ local function apply_harpoon_damage()
               local Harpoon_DamageRate = Harpoon_AttackInfo:get_field("_DamageRate")
 
               if Harpoon_DamageRate then
-                Harpoon_DamageRate._BaseValue = Harpoon_DamageRate._BaseValue * damage_multiplier
+                Harpoon_DamageRate._BaseValue = 100.0
               end
             end
           end
@@ -2130,6 +2130,9 @@ re.on_draw_ui(function()
     was_changed = changed or was_changed
 
     changed, Weapon_Vars.Headshots_Kill = imgui.checkbox("Lethal Headshots", Weapon_Vars.Headshots_Kill)
+    was_changed = changed or was_changed
+
+    changed, Weapon_Vars.Harpoon_DMG = imgui.checkbox("Del Lago Insta Kill", Weapon_Vars.Harpoon_DMG)
     was_changed = changed or was_changed
 
     if imgui.tree_node("OG Settings") then
@@ -2317,6 +2320,10 @@ re.on_frame(function()
       end
     end -- end if scene
   end -- end if scene manger
+
+  if Weapon_Vars.Harpoon_DMG then
+    apply_harpoon_damage()
+  end
 
   if imgui.is_key_pressed(via.hid.KeyboardKey.Insert) then
     show_profile_editor = false
