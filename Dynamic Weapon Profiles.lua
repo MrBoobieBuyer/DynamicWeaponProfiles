@@ -174,7 +174,7 @@ local function SetAWFWeapon_DMGValues()
   end
 
   -- apply additional custom settings
-  
+
   -----/// Main Tree ///-----
   if Weapon_Vars.No_Recoil then 
     AWF.WeaponData.SG09R.Recoil_YawMin = 0.0
@@ -2015,6 +2015,39 @@ local function draw_profile_editor_ui()
   end
 
   imgui.end_window()
+end
+
+local function apply_harpoon_damage()
+  local damage_multiplier = 100;
+  local Harpoon_GameObject = scene:call("findGameObject(System.String)", "wp5406")
+
+  if Harpoon_GameObject then
+    local Harpoon_Gun = Harpoon_GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
+
+    if Harpoon_Gun then
+      local Harpoon_Shell = Harpoon_Gun:get_field("<ShellGenerator>k__BackingField")
+
+      if Harpoon_Shell then
+        local Harpoon_UserData = Harpoon_Shell:get_field("_UserData")
+
+        if Harpoon_UserData then
+          local Harpoon_ShellInfo_UserData = Harpoon_UserData:get_field("_ShellInfoUserData")
+
+          if Harpoon_ShellInfo_UserData then
+            local Harpoon_AttackInfo = Harpoon_ShellInfo_UserData:get_field("_AttackInfo")
+
+            if Harpoon_AttackInfo then
+              local Harpoon_DamageRate = Harpoon_AttackInfo:get_field("_DamageRate")
+
+              if Harpoon_DamageRate then
+                Harpoon_DamageRate._BaseValue = Harpoon_DamageRate._BaseValue * damage_multiplier
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end
 
 local function on_inventory_changed()
