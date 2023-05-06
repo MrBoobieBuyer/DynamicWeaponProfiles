@@ -1,5 +1,7 @@
 # Dynamic Weapon Profiles
 
+![Dynamic Weapon Profiles Screenshot](/screenshots/dwp_screenshot_1.jpg "Screenshot")
+
 ## What's New?
 * Added a live weapon stat editor! You can now edit and save profiles in game!
 
