@@ -177,7 +177,7 @@ local function SetAWFWeapon_DMGValues()
   -- apply additional custom settings
 
   -----/// Main Tree ///-----
-  if Weapon_Vars.No_Recoil then 
+  if Weapon_Vars.No_Recoil then
     AWF.WeaponData.SG09R.Recoil_YawMin = 0.0
     AWF.WeaponData.SG09R.Recoil_YawMax = 0.0
     AWF.WeaponData.SG09R.Recoil_PitchMin = 0.0
@@ -492,7 +492,7 @@ local function SetAWFWeapon_DMGValues()
   end
 
   ----/// SLUGS TREE ///-----
-  if Weapon_Vars.BM4_Slug then 
+  if Weapon_Vars.BM4_Slug then
     AWF.WeaponData.BM4.ReticleType = 1
     AWF.WeaponData.BM4.SG_Center_Random = 0.003
     AWF.WeaponData.BM4.SG_Center_RandomFit = 0.003
@@ -565,7 +565,7 @@ local function SetAWFWeapon_DMGValues()
   end
 
   -----/// OG Options TREE ///-----
-  if Weapon_Vars.HNDC_DMG then 
+  if Weapon_Vars.HNDC_DMG then
     AWF.WeaponData.HNDC.HG_BaseDMG = 2.775
     AWF.WeaponData.HNDC.DMG_LVL_02 = 4.166667
     AWF.WeaponData.HNDC.DMG_LVL_03 = 5.55
@@ -627,7 +627,7 @@ local function SetAWFWeapon_DMGValues()
   end
 
   -----/// MISC TREE ///-----
-  if Weapon_Vars.No_Reticles then 
+  if Weapon_Vars.No_Reticles then
     AWF.WeaponData.SG09R.ReticleType = 100000
     AWF.WeaponData.PUN.ReticleType = 100000
     AWF.WeaponData.RED9.ReticleType = 100000
@@ -2082,6 +2082,64 @@ local function on_inventory_changed()
   apply_changes()
 end
 
+local function create_new_weapon_profile()
+  if new_profile_name ~= nil and new_profile_name ~= '' then
+    -- look for existing files
+    local tempSG09R = json.load_file("DWP\\" .. new_profile_name .. "\\SG09R.json")
+    
+    -- if an existing profile folder wasn't found, copy None into the new profile folder
+    if not tempSG09R then
+      local noneSG09R = json.load_file("DWP\\None\\SG09R.json")
+      local nonePUN = json.load_file("DWP\\None\\PUN.json")
+      local noneRED9 = json.load_file("DWP\\None\\RED9.json")
+      local noneBT = json.load_file("DWP\\None\\BT.json")
+      local noneVP70 = json.load_file("DWP\\None\\VP70.json")
+      local noneSEN9 = json.load_file("DWP\\None\\SEN9.json")
+      local noneM870 = json.load_file("DWP\\None\\M870.json")
+      local noneBM4 = json.load_file("DWP\\None\\BM4.json")
+      local noneSTKR = json.load_file("DWP\\None\\STKR.json")
+      local noneSKUL = json.load_file("DWP\\None\\SKUL.json")
+      local noneTMP = json.load_file("DWP\\None\\TMP.json")
+      local noneCTW = json.load_file("DWP\\None\\CTW.json")
+      local noneLE5 = json.load_file("DWP\\None\\LE5.json")
+      local noneM1G = json.load_file("DWP\\None\\M1G.json")
+      local noneSAR = json.load_file("DWP\\None\\SAR.json")
+      local noneCQBR = json.load_file("DWP\\None\\CQBR.json")
+      local noneBRB = json.load_file("DWP\\None\\BRB.json")
+      local noneKIL7 = json.load_file("DWP\\None\\KIL7.json")
+      local noneHNDC = json.load_file("DWP\\None\\HNDC.json")
+
+      json.dump_file("DWP\\" .. new_profile_name .. "\\SG09R.json", noneSG09R)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\PUN.json", nonePUN)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\RED9.json", noneRED9)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\BT.json", noneBT)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\VP70.json", noneVP70)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\SEN9.json", noneSEN9)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\M870.json", noneM870)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\BM4.json", noneBM4)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\STKR.json", noneSTKR)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\SKUL.json", noneSKUL)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\TMP.json", noneTMP)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\CTW.json", noneCTW)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\LE5.json", noneLE5)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\M1G.json", noneM1G)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\SAR.json", noneSAR)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\CQBR.json", noneCQBR)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\BRB.json", noneBRB)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\KIL7.json", noneKIL7)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\HNDC.json", noneHNDC)
+    end
+
+    local count = 1
+    for _ in pairs(Weapon_Vars.Weapon_Profiles) do
+      count = count + 1
+    end
+    Weapon_Vars.Weapon_Profiles[tostring(count)] = new_profile_name
+    new_profile_name = ""
+    json.dump_file("DWP\\Saved.json", Weapon_Vars)
+  end
+end
+
 -- save the initial values for all guns so they can be reset later
 json.dump_file("DWP\\None\\SG09R.json", AWF.WeaponData.SG09R)
 json.dump_file("DWP\\None\\PUN.json", AWF.WeaponData.PUN)
@@ -2212,14 +2270,8 @@ re.on_draw_ui(function()
       new_profile_name = updated_profile_entry
     end
 
-    if imgui.button("Add Profile") and new_profile_name ~= nil and new_profile_name ~= '' then
-      local count = 1
-      for _ in pairs(Weapon_Vars.Weapon_Profiles) do
-        count = count + 1
-      end
-      Weapon_Vars.Weapon_Profiles[tostring(count)] = new_profile_name
-      new_profile_name = ""
-      json.dump_file("DWP\\Saved.json", Weapon_Vars)
+    if imgui.button("Add Profile") then
+      create_new_weapon_profile()
     end
     imgui.new_line()
   end
