@@ -5,6 +5,28 @@ local PlayerInventory = {}
 local CS_Inventory = nil
 local OldInventoryCount = -1
 
+local WeaponIDTypeMap = {
+  [4000] = "HG",
+  [4001] = "HG",
+  [4002] = "HG",
+  [4003] = "HG",
+  [4004] = "HG",
+  [4100] = "SG_PUMP",
+  [4101] = "SG",
+  [4102] = "SG",
+  [4200] = "SMG",
+  [4201] = "SMG",
+  [4202] = "SMG",
+  [4400] = "SR_PUMP",
+  [4401] = "SR",
+  [4402] = "SR",
+  [4500] = "MAG",
+  [4501] = "MAG_SEMI",
+  [4502] = "MAG",
+  [6000] = "HG",
+  [6001] = "SG",
+}
+
 local function reset_values()
 	WeaponDataTables = {}
 	WeaponStages = {}
@@ -190,7 +212,7 @@ local function get_inventory_item(weaponId)
   return InventoryItem
 end
 
-local function update_weapon(scene, weaponId, weaponType, weaponStats)
+local function update_weapon(scene, weaponId, weaponStats)
   local updatedSuccessfully = false
 
   local WeaponCustom = get_weapon_custom(weaponId)
@@ -198,6 +220,7 @@ local function update_weapon(scene, weaponId, weaponType, weaponStats)
   local WeaponDataTable = get_weapon_data_table(weaponId)
   local InventoryItem = get_inventory_item(weaponId)
   local Gun_GameObject = scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId))
+  local weaponType = WeaponIDTypeMap[weaponId]
 
 	if Gun_GameObject then
 		local Gun = Gun_GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
