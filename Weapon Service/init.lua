@@ -869,6 +869,50 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 	return weaponDetailCustomUpdated
 end
 
+local function update_weapon_data_table(weaponId, weaponStats)
+	local weaponDataTableUpdated = false
+	local WeaponDataTable = get_weapon_data_table(weaponId)
+
+	if WeaponDataTable then
+		weaponDataTableUpdated = true
+		local RecoilParam = WeaponDataTable:get_field("_CameraRecoilParam")
+		local ReticleParam = WeaponDataTable:get_field("_ReticleFitParamTable")
+		local HandShakeParam = WeaponDataTable:get_field("_HandShakeParam")
+		
+		if RecoilParam then
+			local YawRangeDeg = RecoilParam:get_field("_YawRangeDeg")
+			local PitchRangeDeg = RecoilParam:get_field("_PitchRangeDeg")
+
+			if YawRangeDeg then
+				YawRangeDeg.s = weaponStats.Recoil_YawMin
+				YawRangeDeg.r = weaponStats.Recoil_YawMax
+				write_valuetype(RecoilParam, 0x18, YawRangeDeg)
+			else
+				weaponDataTableUpdated = false
+			end
+
+			if PitchRangeDeg then
+				PitchRangeDeg.s = weaponStats.Recoil_PitchMin
+				PitchRangeDeg.r = weaponStats.Recoil_PitchMax
+				write_valuetype(RecoilParam, 0x20, PitchRangeDeg)
+			else
+				weaponDataTableUpdated = false
+			end
+		end
+
+		if ReticleParam then
+			ReticleParam._ReticleShape = weaponStats.ReticleType
+		end
+		
+		if HandShakeParam then
+			HandShakeParam.Time = weaponStats.HandShake_Time
+			HandShakeParam.RStickOffset = weaponStats.HandShake_Offset
+		end
+	end
+
+	return weaponDataTableUpdated
+end
+
 local function update_inventory_item(weaponId, weaponStats)
 	local inventoryItemUpdated = false
 	local InventoryItem = get_inventory_item(weaponId)
@@ -903,9 +947,10 @@ local function update_weapon(scene, weaponId, weaponStats)
 	local gunUpdated = update_gun(scene, weaponId, weaponType, weaponStats)
 	local weaponCustomUpdated = update_weapon_custom(weaponId, weaponStats)
 	local weaponDetailCustomUpdated = update_weapon_detail_custom(weaponId, weaponType, weaponStats)
+	local weaponDataTableUpdated = update_weapon_data_table(weaponId, weaponStats)
 	local inventoryItemUpdated = update_inventory_item(weaponId, weaponStats)
 
-	return gunUpdated and weaponCustomUpdated and weaponDetailCustomUpdated and inventoryItemUpdated
+	return gunUpdated and weaponCustomUpdated and weaponDetailCustomUpdated and weaponDataTableUpdated and inventoryItemUpdated
 end
 
 return {
