@@ -142,12 +142,26 @@ local function update_player_inventory(scene)
 
 			inventoryChanged = updatedInventoryCount ~= OldInventoryCount
 
-			OldInventoryCount = updatedInventoryCount
-			PlayerInventory = updatedInventory
+      if inventoryChanged then
+        OldInventoryCount = updatedInventoryCount
+        PlayerInventory = updatedInventory
+      end
 		end
 	end
 
   return inventoryChanged, addedWeaponId
+end
+
+local function get_inventory()
+  local inventory = { }
+  local count = 1
+
+  for k, v in pairs(PlayerInventory) do
+    inventory[count] = k
+    count = count + 1
+  end
+
+  return inventory
 end
 
 local function get_weapon_custom(weaponId)
@@ -816,5 +830,6 @@ return {
   build_weapon_catalog = build_weapon_catalog,
   update_player_inventory = update_player_inventory,
   update_weapon = update_weapon,
-	reset_values = reset_values
+	reset_values = reset_values,
+  get_inventory = get_inventory
 }
