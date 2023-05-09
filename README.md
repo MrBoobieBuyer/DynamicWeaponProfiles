@@ -45,7 +45,7 @@
 - [x] Harpoon damage
 - [ ] Auto update the profiles in saved json
 - [ ] Add EX upgrades to non native weapons, preferably in combination
-- [ ] Add json editor
+- [x] Add json editor
 - [x] Weapon stat editor gui that can update jsons
 - [ ] Knives
 - [ ] Bolt thrower
