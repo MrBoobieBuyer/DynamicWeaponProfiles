@@ -3,7 +3,10 @@
 ![Dynamic Weapon Profiles Screenshot](/screenshots/dwp_screenshot_1.jpg "Screenshot")
 
 ## What's New?
+* You no longer need to press Enter to apply stat change in the profile editor.
+* Resolved checkbox conflict with Chicago Typewriter.
 * Added a live weapon stat editor! You can now edit and save profiles in game!
+
 
 ## Profiles
 * Dynamic Weapon Profiles allows you to dynamically change the stats of all weapons by selecting the desired profile in a dropdown menu.
