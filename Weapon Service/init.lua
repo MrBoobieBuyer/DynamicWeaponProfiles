@@ -8,17 +8,20 @@ local InventoryItemsToUpdate = {}
 local WeaponProfile = nil
 local WeaponCatalogInitialized = false
 local Scene = nil
+local RED9OwnerEquipment = nil
+local TMPOwnerEquipment = nil
+local VP70OwnerEquipment = nil
 
 local Weapons = {
 	SG09R = { Id = 4000, Name = "SG09R", Type = "HG", Stats = nil },
 	PUN = { Id = 4001, Name = "PUN", Type = "HG", Stats = nil },
-  RED9 = { Id = 4002, Name = "RED9", Type = "HG", Stats = nil },
+  RED9 = { Id = 4002, Name = "RED9", Type = "HG", CanEquipStock = true, StockEquipped = false, Stats = nil, StatsWithStock = nil },
   BT = { Id = 4003, Name = "BT", Type = "HG", Stats = nil },
-  VP70 = { Id = 4004, Name = "VP70", Type = "HG", Stats = nil },
+  VP70 = { Id = 4004, Name = "VP70", Type = "HG", CanEquipStock = true, StockEquipped = false, Stats = nil, StatsWithStock = nil },
   M870 = { Id = 4100, Name = "M870", Type = "SG_PUMP", Stats = nil },
   BM4 = { Id = 4101, Name = "BM4", Type = "SG", Stats = nil },
   STKR = { Id = 4102, Name = "STKR", Type = "SG", Stats = nil },
-  TMP = { Id = 4200, Name = "TMP", Type = "SMG", Stats = nil },
+  TMP = { Id = 4200, Name = "TMP", Type = "SMG", CanEquipStock = true, StockEquipped = false, Stats = nil, StatsWithStock = nil },
   CTW = { Id = 4201, Name = "CTW", Type = "SMG", Stats = nil },
   LE5 = { Id = 4202, Name = "LE5", Type = "SMG", Stats = nil },
   M1G = { Id = 4400, Name = "M1G", Type = "SR_PUMP", Stats = nil },
@@ -62,6 +65,9 @@ local function reset_values()
 	OldInventoryCount = -1
 	InventoryItemsToUpdate = {}
 	WeaponCatalogInitialized = false
+	RED9OwnerEquipment = nil
+	TMPOwnerEquipment = nil
+	VP70OwnerEquipment = nil
 end
 
 local function set_weapon_profile(weaponProfile)
@@ -71,6 +77,10 @@ local function set_weapon_profile(weaponProfile)
 		for k, Weapon in pairs(Weapons) do
 			log.info("Weapon Service: Loading profile for " .. Weapon.Name)
 			Weapon.Stats = json.load_file("DWP\\" .. WeaponProfile .. "\\" .. Weapon.Name .. ".json")
+
+			if Weapon.CanEquipStock then
+				Weapon.StatsWithStock = json.load_file("DWP\\" .. WeaponProfile .. "\\" .. Weapon.Name .. "Stock.json")
+			end
 		end
 	end
 end
@@ -1020,7 +1030,39 @@ local function update_weapon(weaponId, weaponStats)
 	return gunUpdated and weaponCustomUpdated and weaponDetailCustomUpdated and weaponDataTableUpdated and inventoryItemUpdated
 end
 
-local function process_added_inventory_items()
+local function cache_owner_equipment(weaponId)
+	local foundOwnerEquipment = false
+
+	if (weaponId == Weapons.RED9.Id and (not RED9OwnerEquipment)) or (weaponId == Weapons.TMP.Id and (not TMPOwnerEquipment)) or (weaponId == Weapons.VP70.Id and (not VP70OwnerEquipment)) then
+		local GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId))
+		if GameObject then
+			local Gun = GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
+			if Gun then
+				local OwnerEquipment = Gun:get_field("<OwnerEquipment>k__BackingField")
+				if OwnerEquipment then
+					if weaponId == Weapons.RED9.Id then
+						RED9OwnerEquipment = OwnerEquipment
+						Weapons.RED9.StockEquipped = OwnerEquipment:get_IsExistsStock()
+					elseif weaponId == Weapons.TMP.Id then
+						TMPOwnerEquipment = OwnerEquipment
+						Weapons.TMP.StockEquipped = OwnerEquipment:get_IsExistsStock()
+					elseif weaponId == Weapons.VP70.Id then
+						VP70OwnerEquipment = OwnerEquipment
+						Weapons.VP70.StockEquipped = OwnerEquipment:get_IsExistsStock()
+					end
+					log.info("Weapon Service: Found owner equipment for " .. tostring(weaponId))
+					foundOwnerEquipment = true
+				end
+			end
+		end
+	else
+		foundOwnerEquipment = true
+	end
+
+	return foundOwnerEquipment
+end
+
+local function process_inventory_item_updates()
 	local updateCount = #InventoryItemsToUpdate
 
 	for i=1,updateCount do
@@ -1028,14 +1070,25 @@ local function process_added_inventory_items()
 
 		if weaponId ~= nil then
 			local weapon = get_weapon(weaponId)
+			local foundOwnerEquipment = cache_owner_equipment(weaponId)
 
-			if weapon and weapon.Stats then
+			if weapon and foundOwnerEquipment then
+				local weaponStats = nil
 				log.info("Weapon Service: Processing stats for " .. weapon.Id .. ":" .. weapon.Name)
-				local weaponUpdated = update_weapon(weaponId, weapon.Stats)
 
-				if weaponUpdated then
-					log.info("Weapon Service: Stats successfully applied for " .. weapon.Id .. ":" .. weapon.Name)
-					table.remove(InventoryItemsToUpdate, i)
+				if weapon.StockEquipped and weapon.StatsWithStock then
+					weaponStats = weapon.StatsWithStock
+				else
+					weaponStats = weapon.Stats
+				end
+
+				if weaponStats then
+					local weaponUpdated = update_weapon(weaponId, weaponStats)
+
+					if weaponUpdated then
+						log.info("Weapon Service: Stats successfully applied for " .. weapon.Id .. " - " .. weapon.Name)
+						table.remove(InventoryItemsToUpdate, i)
+					end
 				end
 			end
 		end
@@ -1059,7 +1112,38 @@ local function on_frame()
 		end
 
 		update_player_inventory()
-		process_added_inventory_items()
+
+		-- adjust red 9 when the stock is equiped or unquiped
+		if RED9OwnerEquipment then
+			local red9StockEquipped = RED9OwnerEquipment:get_IsExistsStock()
+			if Weapons.RED9.StockEquipped ~= red9StockEquipped then
+				log.info("Weapon Service: RED9 stock equip changed")
+				Weapons.RED9.StockEquipped = red9StockEquipped
+				apply_weapon_stats(Weapons.RED9.Id)
+			end
+		end
+
+		-- adjust tmp when the stock is equiped or unquiped
+		if TMPOwnerEquipment then
+			local tmpStockEquipped = TMPOwnerEquipment:get_IsExistsStock()
+			if Weapons.TMP.StockEquipped ~= tmpStockEquipped then
+				log.info("Weapon Service: TMP stock equip changed")
+				Weapons.TMP.StockEquipped = tmpStockEquipped
+				apply_weapon_stats(Weapons.TMP.Id)
+			end
+		end
+
+		-- adjust vp70 when the stock is equiped or unquiped
+		if VP70OwnerEquipment then
+			local vp70StockEquipped = VP70OwnerEquipment:get_IsExistsStock()
+			if Weapons.VP70.StockEquipped ~= vp70StockEquipped then
+				log.info("VP70 stock equip changed")
+				Weapons.VP70.StockEquipped = vp70StockEquipped
+				apply_weapon_stats(Weapons.VP70.Id)
+			end
+		end
+
+		process_inventory_item_updates()
 	end
 end
 
