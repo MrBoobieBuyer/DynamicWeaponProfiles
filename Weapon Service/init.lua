@@ -4,6 +4,32 @@ local WeaponDetailStages = {}
 local PlayerInventory = {}
 local CS_Inventory = nil
 local OldInventoryCount = -1
+local InventoryItemsToUpdate = {}
+local WeaponProfile = nil
+local WeaponCatalogInitialized = false
+local Scene = nil
+
+local Weapons = {
+	SG09R = { Id = 4000, Name = "SG09R", Type = "HG", Stats = nil },
+	PUN = { Id = 4001, Name = "PUN", Type = "HG", Stats = nil },
+  RED9 = { Id = 4002, Name = "RED9", Type = "HG", Stats = nil },
+  BT = { Id = 4003, Name = "BT", Type = "HG", Stats = nil },
+  VP70 = { Id = 4004, Name = "VP70", Type = "HG", Stats = nil },
+  M870 = { Id = 4100, Name = "M870", Type = "SG_PUMP", Stats = nil },
+  BM4 = { Id = 4101, Name = "BM4", Type = "SG", Stats = nil },
+  STKR = { Id = 4102, Name = "STKR", Type = "SG", Stats = nil },
+  TMP = { Id = 4200, Name = "TMP", Type = "SMG", Stats = nil },
+  CTW = { Id = 4201, Name = "CTW", Type = "SMG", Stats = nil },
+  LE5 = { Id = 4202, Name = "LE5", Type = "SMG", Stats = nil },
+  M1G = { Id = 4400, Name = "M1G", Type = "SR_PUMP", Stats = nil },
+  SAR = { Id = 4401, Name = "SAR", Type = "SR", Stats = nil },
+  CQBR = { Id = 4402, Name = "CQBR", Type = "SR", Stats = nil },
+  BRB = { Id = 4500, Name = "BRB", Type = "MAG", Stats = nil },
+  KIL7 = { Id = 4501, Name = "KIL7", Type = "MAG_SEMI", Stats = nil },
+  HNDC = { Id = 4502, Name = "HNDC", Type = "MAG", Stats = nil },
+  SEN9 = { Id = 6000, Name = "SEN9", Type = "HG", Stats = nil },
+  SKUL = { Id = 6001, Name = "SKUL", Type = "SG", Stats = nil },
+}
 
 local WeaponIDTypeMap = {
   [4000] = "HG",
@@ -34,6 +60,29 @@ local function reset_values()
 	PlayerInventory = {}
 	CS_Inventory = nil
 	OldInventoryCount = -1
+	InventoryItemsToUpdate = {}
+	WeaponCatalogInitialized = false
+end
+
+local function set_weapon_profile(weaponProfile)
+	WeaponProfile = weaponProfile
+
+	if WeaponProfile then
+		for k, Weapon in pairs(Weapons) do
+			log.info("Weapon Service: Loading profile for " .. Weapon.Name)
+			Weapon.Stats = json.load_file("DWP\\" .. WeaponProfile .. "\\" .. Weapon.Name .. ".json")
+		end
+	end
+end
+
+local function set_scene(scene)
+	Scene = scene
+end
+
+local function player_in_scene()
+  local character_manager = sdk.get_managed_singleton(sdk.game_namespace("CharacterManager"))
+  local player_context = character_manager:call("getPlayerContextRef")
+  return player_context ~= nil
 end
 
 local function write_valuetype(parent_obj, offset, value)
@@ -42,12 +91,12 @@ local function write_valuetype(parent_obj, offset, value)
   end
 end
 
-local function build_weapon_catalog(scene)
+local function build_weapon_catalog()
   local catalogFound = false
 	local customCatalogFound = false
 
 	if not WeaponDataTables[1] then
-		local WeaponCatalog = scene:call("findGameObject(System.String)", "WeaponCatalog")
+		local WeaponCatalog = Scene:call("findGameObject(System.String)", "WeaponCatalog")
 
 		if WeaponCatalog then
 			local WeaponCatalogRegister = WeaponCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.WeaponCatalogRegister"))
@@ -65,7 +114,7 @@ local function build_weapon_catalog(scene)
 	end
 
   if not WeaponDetailStages[1] then
-		local WeaponCustomCatalog = scene:call("findGameObject(System.String)", "WeaponCustomCatalog")
+		local WeaponCustomCatalog = Scene:call("findGameObject(System.String)", "WeaponCustomCatalog")
 
 		if WeaponCustomCatalog then
 			local WeaponCustomCatalogRegister = WeaponCustomCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.WeaponCustomCatalogRegister"))
@@ -92,13 +141,28 @@ local function build_weapon_catalog(scene)
   return catalogFound and customCatalogFound
 end
 
-local function update_player_inventory(scene)
+local function apply_weapon_stats(weaponId)
+	if PlayerInventory[weaponId] then
+		table.insert(InventoryItemsToUpdate, weaponId)
+	end
+end
+
+local function apply_all_weapon_stats()
+	log.info("Weapon Service: Applying all weapon stats...")
+	for k,v in pairs(PlayerInventory) do
+		if not InventoryItemsToUpdate[k] then
+			table.insert(InventoryItemsToUpdate, k)
+		end
+	end
+end
+
+local function update_player_inventory()
   local inventoryChanged = false
 	local addedWeaponId = nil
 
 	-- find and cache cs inventory
 	if CS_Inventory == nil then
-		local PlayerInventoryObserver = scene:call("findGameObject(System.String)", "PlayerInventoryObserver")
+		local PlayerInventoryObserver = Scene:call("findGameObject(System.String)", "PlayerInventoryObserver")
 
 		if PlayerInventoryObserver then
 			local InventoryObserver = PlayerInventoryObserver:call("getComponent(System.Type)", sdk.typeof("chainsaw.PlayerInventoryObserver"))
@@ -128,14 +192,16 @@ local function update_player_inventory(scene)
 			local updatedInventoryCount = 0
 
 			for i, Item in ipairs(PlayerItems) do
-				local WeaponID = Item:call("get_WeaponId")
+				local WeaponId = Item:call("get_WeaponId")
 
-				if WeaponID and WeaponID ~= -1 then
-					updatedInventory[WeaponID] = Item
+				if WeaponId and WeaponId ~= -1 and WeaponIDTypeMap[WeaponId] ~= nil then
+					updatedInventory[WeaponId] = Item
 					updatedInventoryCount = updatedInventoryCount + 1
 
-					if PlayerInventory[WeaponID] == nil and OldInventoryCount ~= -1 then
-						addedWeaponId = WeaponID
+					if PlayerInventory[WeaponId] == nil then
+						addedWeaponId = WeaponId
+						table.insert(InventoryItemsToUpdate, WeaponId)
+						log.info("Weapon Service: Weapon " .. WeaponId .. " added to inventory")
 					end
 				end
 			end
@@ -152,16 +218,17 @@ local function update_player_inventory(scene)
   return inventoryChanged, addedWeaponId
 end
 
-local function get_inventory()
-  local inventory = { }
-  local count = 1
+local function get_weapon(weaponId)
+	local Weapon = nil
 
-  for k, v in pairs(PlayerInventory) do
-    inventory[count] = k
-    count = count + 1
-  end
+	for k, v in pairs(Weapons) do
+		if v.Id == weaponId then
+			Weapon = v
+			break
+		end
+	end
 
-  return inventory
+	return Weapon
 end
 
 local function get_weapon_custom(weaponId)
@@ -226,9 +293,9 @@ local function get_inventory_item(weaponId)
   return InventoryItem
 end
 
-local function update_gun(scene, weaponId, weaponType, weaponStats)
+local function update_gun(weaponId, weaponType, weaponStats)
 	local gunUpdated = false
-	local Gun_GameObject = scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId))
+	local Gun_GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId))
 
 	if Gun_GameObject then
 		local Gun = Gun_GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
@@ -941,10 +1008,10 @@ local function update_inventory_item(weaponId, weaponStats)
 	return inventoryItemUpdated
 end
 
-local function update_weapon(scene, weaponId, weaponStats)
+local function update_weapon(weaponId, weaponStats)
   local weaponType = WeaponIDTypeMap[weaponId]
 
-	local gunUpdated = update_gun(scene, weaponId, weaponType, weaponStats)
+	local gunUpdated = update_gun(weaponId, weaponType, weaponStats)
 	local weaponCustomUpdated = update_weapon_custom(weaponId, weaponStats)
 	local weaponDetailCustomUpdated = update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 	local weaponDataTableUpdated = update_weapon_data_table(weaponId, weaponStats)
@@ -953,10 +1020,54 @@ local function update_weapon(scene, weaponId, weaponStats)
 	return gunUpdated and weaponCustomUpdated and weaponDetailCustomUpdated and weaponDataTableUpdated and inventoryItemUpdated
 end
 
+local function process_added_inventory_items()
+	local updateCount = #InventoryItemsToUpdate
+
+	for i=1,updateCount do
+		local weaponId = InventoryItemsToUpdate[i]
+
+		if weaponId ~= nil then
+			local weapon = get_weapon(weaponId)
+
+			if weapon and weapon.Stats then
+				log.info("Weapon Service: Processing stats for " .. weapon.Id .. ":" .. weapon.Name)
+				local weaponUpdated = update_weapon(weaponId, weapon.Stats)
+
+				if weaponUpdated then
+					log.info("Weapon Service: Stats successfully applied for " .. weapon.Id .. ":" .. weapon.Name)
+					table.remove(InventoryItemsToUpdate, i)
+				end
+			end
+		end
+  end
+end
+
+local function on_frame()
+	local playerIsInScene = false
+
+	if Scene then
+		playerIsInScene = player_in_scene()
+
+		if not playerIsInScene then
+			reset_values();
+		end
+	end
+
+	if playerIsInScene then
+		if not WeaponCatalogInitialized then
+			WeaponCatalogInitialized = build_weapon_catalog()
+		end
+
+		update_player_inventory()
+		process_added_inventory_items()
+	end
+end
+
 return {
-  build_weapon_catalog = build_weapon_catalog,
-  update_player_inventory = update_player_inventory,
-  update_weapon = update_weapon,
-	reset_values = reset_values,
-  get_inventory = get_inventory
+	set_weapon_profile = set_weapon_profile,
+	set_scene = set_scene,
+	on_frame = on_frame,
+	apply_weapon_stats = apply_weapon_stats,
+	apply_all_weapon_stats = apply_all_weapon_stats,
+	Weapons = Weapons
 }
