@@ -76,10 +76,15 @@ local function set_weapon_profile(weaponProfile)
 	if WeaponProfile then
 		for k, Weapon in pairs(Weapons) do
 			log.info("Weapon Service: Loading profile for " .. Weapon.Name)
-			Weapon.Stats = json.load_file("DWP\\" .. WeaponProfile .. "\\" .. Weapon.Name .. ".json")
+			local weaponStats = json.load_file("DWP\\" .. WeaponProfile .. "\\" .. Weapon.Name .. ".json")
+			Weapon.Stats = weaponStats
 
 			if Weapon.CanEquipStock then
 				Weapon.StatsWithStock = json.load_file("DWP\\" .. WeaponProfile .. "\\" .. Weapon.Name .. "Stock.json")
+
+				if not Weapon.StatsWithStock then
+					Weapon.StatsWithStock = weaponStats
+				end
 			end
 		end
 	end
