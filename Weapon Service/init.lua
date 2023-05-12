@@ -30,8 +30,12 @@ local Weapons = {
   BRB = { Id = 4500, Name = "BRB", Type = "MAG", Stats = nil },
   KIL7 = { Id = 4501, Name = "KIL7", Type = "MAG_SEMI", Stats = nil },
   HNDC = { Id = 4502, Name = "HNDC", Type = "MAG", Stats = nil },
+	BOLT = {Id = 4600, Name = "BOLT", Type = "BOLT", Stats = nil},
+	CMBT = { Id = 5000, Name = "CMBT", Type = "K", Stats = nil },
+	FIGHT = { Id = 5001, Name = "FIGHT", Type = "K", Stats = nil },
+	PRIM = { Id = 5006, Name = "PRIM", Type = "K", Stats = nil },
   SEN9 = { Id = 6000, Name = "SEN9", Type = "HG", Stats = nil },
-  SKUL = { Id = 6001, Name = "SKUL", Type = "SG", Stats = nil },
+  SKUL = { Id = 6001, Name = "SKUL", Type = "SG", Stats = nil }
 }
 
 local WeaponIDTypeMap = {
@@ -52,6 +56,10 @@ local WeaponIDTypeMap = {
   [4500] = "MAG",
   [4501] = "MAG_SEMI",
   [4502] = "MAG",
+  [4600] = "BOLT",
+  [5000] = "K",
+  [5001] = "K",
+  [5006] = "K",
   [6000] = "HG",
   [6001] = "SG",
 }
@@ -626,6 +634,28 @@ local function update_weapon_custom(weaponId, weaponStats)
 			for i, IndividualCategories in ipairs(Custom_Individuals) do
 				local Custom_CategoryID = IndividualCategories:call("get_IndividualCustomCategory")
 
+				if Custom_CategoryID == 6 then
+					local Custom_Strength = IndividualCategories:get_field("_CustomStrength")
+
+					if Custom_Strength then
+						local Custom_StrengthStages = Custom_Strength:get_field("_StrengthCustomStages")
+
+						if Custom_StrengthStages then
+							Custom_StrengthStages[0]._Info = weaponStats.Dur_LVL_01_MAX_INFO
+							Custom_StrengthStages[1]._Info = weaponStats.Dur_LVL_02_MAX_INFO
+							Custom_StrengthStages[2]._Info = weaponStats.Dur_LVL_03_MAX_INFO
+							Custom_StrengthStages[3]._Info = weaponStats.Dur_LVL_04_MAX_INFO
+							Custom_StrengthStages[4]._Info = weaponStats.Dur_LVL_05_MAX_INFO
+
+							Custom_StrengthStages[0]._Cost = weaponStats.Dur_LVL_01_COST
+							Custom_StrengthStages[1]._Cost = weaponStats.Dur_LVL_02_COST
+							Custom_StrengthStages[2]._Cost = weaponStats.Dur_LVL_03_COST
+							Custom_StrengthStages[3]._Cost = weaponStats.Dur_LVL_04_COST
+							Custom_StrengthStages[4]._Cost = weaponStats.Dur_LVL_05_COST
+						end
+					end
+				end
+
 				if Custom_CategoryID == 7 then
 					local Custom_CustomReloadSpeed = IndividualCategories:get_field("_CustomReloadSpeed")
 
@@ -797,11 +827,23 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 			for i, IndividualCategories in ipairs(Custom_IndividualCustoms) do
 				local Custom_CategoryID = IndividualCategories:call("get_IndividualCustomCategory")
 
+				
+				if Custom_CategoryID == 6 and weaponType == "K" then
+					local Custom_Strength = IndividualCategories:get_field("_Strength")
+
+					if Custom_Strength then
+						Custom_Strength._DurabilityMaxes[0] = weaponStats.Dur_LVL_01_MAX
+						Custom_Strength._DurabilityMaxes[1] = weaponStats.Dur_LVL_02_MAX
+						Custom_Strength._DurabilityMaxes[2] = weaponStats.Dur_LVL_03_MAX
+						Custom_Strength._DurabilityMaxes[3] = weaponStats.Dur_LVL_04_MAX
+						Custom_Strength._DurabilityMaxes[4] = weaponStats.Dur_LVL_05_MAX
+					end
+				end
+
 				if Custom_CategoryID == 7 then
 					local Custom_ReloadSpeed = IndividualCategories:get_field("_ReloadSpeed")
 
 					if Custom_ReloadSpeed then
-						-- TODO: Figure out specific weapon type properties (might not be needed...)
 						if weaponType == "HG" or weaponType == "SMG" or weaponType == "SR" or weaponType == "MAG_SEMI" then
 							Custom_ReloadSpeed._ReloadSpeedRates[0] = weaponStats.RELOAD_LVL_01
 							Custom_ReloadSpeed._ReloadSpeedRates[1] = weaponStats.RELOAD_LVL_02
@@ -810,8 +852,7 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 							Custom_ReloadSpeed._ReloadSpeedRates[4] = weaponStats.RELOAD_LVL_05
 						end
 
-						-- TODO: Figure out specific weapon type properties (might not be needed...)
-						if weaponType == "SG" or weaponType == "SG_PUMP" or weaponType == "SR_PUMP" or weaponType == "MAG" then
+						if weaponType == "SG" or weaponType == "SG_PUMP" or weaponType == "SR_PUMP" or weaponType == "MAG" or weaponType == "BOLT" then
 							Custom_ReloadSpeed._ReloadNums[0] = weaponStats.RELOAD_LVL_01
 							Custom_ReloadSpeed._ReloadNums[1] = weaponStats.RELOAD_LVL_02
 							Custom_ReloadSpeed._ReloadNums[2] = weaponStats.RELOAD_LVL_03
@@ -833,8 +874,7 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 						Custom_RateOfFire._RapidSpeed[3] = weaponStats.ROF_LVL_04
 						Custom_RateOfFire._RapidSpeed[4] = weaponStats.ROF_LVL_05
 
-						-- TODO: Figure out specific weapon type properties (might not be needed...)
-						if weaponType == "SG_PUMP" or weaponType == "SR_PUMP" then
+						if weaponType == "SG_PUMP" or weaponType == "SR_PUMP" or weaponType == "BOLT" then
 							Custom_RateOfFire._PumpActionRapidSpeed[0] = weaponStats.PUMP_LVL_01
 							Custom_RateOfFire._PumpActionRapidSpeed[1] = weaponStats.PUMP_LVL_02
 							Custom_RateOfFire._PumpActionRapidSpeed[2] = weaponStats.PUMP_LVL_03
@@ -939,7 +979,7 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 
 				if Custom_CategoryID == 9 or Custom_CategoryID == "9" then
 					local Custom_UnbreakableEX = LimitBreakCategories:get_field("_LimitBreakUnbreakable")
-
+				
 					if Custom_UnbreakableEX then
 						Custom_UnbreakableEX._IsUnbreakable = weaponStats.EX_UNBRK
 					end
@@ -1025,14 +1065,21 @@ end
 
 local function update_weapon(weaponId, weaponStats)
   local weaponType = WeaponIDTypeMap[weaponId]
+	local weaponUpdated = false
 
-	local gunUpdated = update_gun(weaponId, weaponType, weaponStats)
+	-- skip gun updates for knives
+	if weaponType == "K" then
+		weaponUpdated = true
+	else
+		weaponUpdated = update_gun(weaponId, weaponType, weaponStats)
+	end
+
 	local weaponCustomUpdated = update_weapon_custom(weaponId, weaponStats)
 	local weaponDetailCustomUpdated = update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 	local weaponDataTableUpdated = update_weapon_data_table(weaponId, weaponStats)
 	local inventoryItemUpdated = update_inventory_item(weaponId, weaponStats)
 
-	return gunUpdated and weaponCustomUpdated and weaponDetailCustomUpdated and weaponDataTableUpdated and inventoryItemUpdated
+	return weaponUpdated and weaponCustomUpdated and weaponDetailCustomUpdated and weaponDataTableUpdated and inventoryItemUpdated
 end
 
 local function cache_owner_equipment(weaponId)
