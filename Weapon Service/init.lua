@@ -1019,6 +1019,7 @@ local function update_weapon_data_table(weaponId, weaponStats)
 		local RecoilParam = WeaponDataTable:get_field("_CameraRecoilParam")
 		local ReticleParam = WeaponDataTable:get_field("_ReticleFitParamTable")
 		local HandShakeParam = WeaponDataTable:get_field("_HandShakeParam")
+		local KnifeCombatSpeedParam = WeaponDataTable:get_field("_knifeCombatSpeedParam")
 		
 		if RecoilParam then
 			local YawRangeDeg = RecoilParam:get_field("_YawRangeDeg")
@@ -1048,6 +1049,10 @@ local function update_weapon_data_table(weaponId, weaponStats)
 		if HandShakeParam then
 			HandShakeParam.Time = weaponStats.HandShake_Time
 			HandShakeParam.RStickOffset = weaponStats.HandShake_Offset
+		end
+
+		if KnifeCombatSpeedParam then
+			KnifeCombatSpeedParam._KnifeCombatSpeed = weaponStats.Knife_Speed
 		end
 	end
 
