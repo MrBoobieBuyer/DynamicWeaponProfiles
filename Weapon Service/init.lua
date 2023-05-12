@@ -884,7 +884,7 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 						Custom_RateOfFire._RapidSpeed[3] = weaponStats.ROF_LVL_04
 						Custom_RateOfFire._RapidSpeed[4] = weaponStats.ROF_LVL_05
 
-						if weaponType == "SG_PUMP" or weaponType == "SR_PUMP" then
+						if weaponType == "SG_PUMP" or weaponType == "SR_PUMP" or weaponType == "BOLT" then
 							Custom_RateOfFire._PumpActionRapidSpeed[0] = weaponStats.PUMP_LVL_01
 							Custom_RateOfFire._PumpActionRapidSpeed[1] = weaponStats.PUMP_LVL_02
 							Custom_RateOfFire._PumpActionRapidSpeed[2] = weaponStats.PUMP_LVL_03
