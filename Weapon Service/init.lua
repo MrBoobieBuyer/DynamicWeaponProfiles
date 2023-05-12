@@ -644,6 +644,30 @@ local function update_weapon_custom(weaponId, weaponStats)
 			for i, IndividualCategories in ipairs(Custom_Individuals) do
 				local Custom_CategoryID = IndividualCategories:call("get_IndividualCustomCategory")
 
+				if Custom_CategoryID == 4 then
+					local Custom_Repair = IndividualCategories:get_field("_CustomRepair")
+
+					if Custom_Repair then
+						local Custom_RepairStages = Custom_Repair:get_field("_RepairCustomStages")
+
+						if Custom_RepairStages then
+							Custom_RepairStages[0]._Cost = weaponStats.Repair_Cost
+						end
+					end
+				end
+
+				if Custom_CategoryID == 5 then
+					local Custom_Polish = IndividualCategories:get_field("_CustomPolish")
+					
+					if Custom_Polish then
+						local Custom_PolishStages = Custom_Polish:get_field("_PolishCustomStages")
+
+						if Custom_PolishStages then
+							Custom_PolishStages[0]._Cost = weaponStats.Polish_Cost
+						end
+					end
+				end
+
 				if Custom_CategoryID == 6 then
 					local Custom_Strength = IndividualCategories:get_field("_CustomStrength")
 
