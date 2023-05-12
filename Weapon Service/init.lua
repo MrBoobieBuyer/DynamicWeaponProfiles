@@ -333,12 +333,22 @@ local function update_gun(weaponId, weaponType, weaponStats)
 			if Shell then
 				local Shell_UserData = Shell:get_field("_UserData")
 
+				if weaponType == "BOLT" then
+					local Shell_BombSettings = Shell:get_field("_ArrowBombShellGeneratorUserData")
+
+					if Shell_BombSettings then
+						Shell_BombSettings._BombStartTime = weaponStats.BOMB_START
+						Shell_BombSettings._SensorTime = weaponStats.SENSOR
+						Shell_BombSettings._SensorRadius = weaponStats.SENSOR_RAD
+					end
+				end
+
 				if Shell_UserData then
 					local Shell_HG_SMG_SR_MAG = Shell_UserData:get_field("_ShellInfoUserData")
 					local ShellSG_CenterUserData = Shell_UserData:get_field("_CenterShellInfoUserData")
 					local ShellSG_AroundUserData = Shell_UserData:get_field("_AroundShellInfoUserData")
 					local ShellSG_AroundSettings = Shell_UserData:get_field("_AroundShellSetting")
-
+					
 					if weaponType == "SG" or weaponType == "SG_PUMP" then
 						if ShellSG_CenterUserData then
 							local ShellSG_CenterUserData_Life = ShellSG_CenterUserData:get_field("_LifeInfo")
@@ -874,7 +884,7 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 						Custom_RateOfFire._RapidSpeed[3] = weaponStats.ROF_LVL_04
 						Custom_RateOfFire._RapidSpeed[4] = weaponStats.ROF_LVL_05
 
-						if weaponType == "SG_PUMP" or weaponType == "SR_PUMP" or weaponType == "BOLT" then
+						if weaponType == "SG_PUMP" or weaponType == "SR_PUMP" then
 							Custom_RateOfFire._PumpActionRapidSpeed[0] = weaponStats.PUMP_LVL_01
 							Custom_RateOfFire._PumpActionRapidSpeed[1] = weaponStats.PUMP_LVL_02
 							Custom_RateOfFire._PumpActionRapidSpeed[2] = weaponStats.PUMP_LVL_03
@@ -983,6 +993,15 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 					if Custom_UnbreakableEX then
 						Custom_UnbreakableEX._IsUnbreakable = weaponStats.EX_UNBRK
 					end
+				end
+			end
+		end
+
+		if Custom_AttachmentCustoms then
+			for i, AttachmentCategories in ipairs(Custom_AttachmentCustoms) do
+				local Attachment_Params = AttachmentCategories:call("get_AttachmentParams")
+				if Attachment_Params and Attachment_Params[2] then
+					Attachment_Params[2]._ReticleGuiType = weaponStats.ReticleTypeStock
 				end
 			end
 		end
