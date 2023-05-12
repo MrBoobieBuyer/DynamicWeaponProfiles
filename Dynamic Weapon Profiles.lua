@@ -28,6 +28,7 @@ local Weapon_Vars = json.load_file("DWP\\Saved.json") or {
   BRB_HG = false,
   HNDC_HG = false,
   Harpoon_DMG = false,
+  Durable_Knives = false,
   Weapon_Profiles = {
     ["1"] = "None",
     ["2"] = "Better Weapon Balance"
@@ -558,6 +559,47 @@ local function SetWeapon_DMGValues()
 
   if Weapon_Vars.HNDC_HG then
     WeaponService.Weapons.HNDC.Stats.AmmoType = 112800000
+  end
+
+  if Weapon_Vars.Durable_Knives then
+    WeaponService.Weapons.CMBT.Stats.DurDEF_Max = 9999
+    WeaponService.Weapons.CMBT.Stats.DurSLD_Max = 9999
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_01_MAX = 9999
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_01_MAX_INFO = "9999"
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_02_MAX = 9999
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_02_MAX_INFO  = "9999"
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_03_MAX = 9999
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_03_MAX_INFO  = "9999"
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_04_MAX = 9999
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_04_MAX_INFO  = "9999"
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_05_MAX = 9999
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_05_MAX_INFO  = "9999"
+
+    WeaponService.Weapons.FIGHT.Stats.DurDEF_Max = 9999
+    WeaponService.Weapons.FIGHT.Stats.DurSLD_Max = 9999
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_01_MAX = 9999
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_01_MAX_INFO = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_02_MAX = 9999
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_02_MAX_INFO  = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_03_MAX = 9999
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_03_MAX_INFO  = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_04_MAX = 9999
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_04_MAX_INFO  = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_05_MAX = 9999
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_05_MAX_INFO  = "9999"
+
+    WeaponService.Weapons.PRIM.Stats.DurDEF_Max = 9999
+    WeaponService.Weapons.PRIM.Stats.DurSLD_Max = 9999
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_01_MAX = 9999
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_01_MAX_INFO = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_02_MAX = 9999
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_02_MAX_INFO  = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_03_MAX = 9999
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_03_MAX_INFO  = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_04_MAX = 9999
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_04_MAX_INFO  = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_05_MAX = 9999
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_05_MAX_INFO  = "9999"
   end
 end
 
@@ -2042,6 +2084,9 @@ re.on_draw_ui(function()
     was_changed = changed or was_changed
 
     changed, Weapon_Vars.Harpoon_DMG = imgui.checkbox("Del Lago Insta Kill", Weapon_Vars.Harpoon_DMG)
+    was_changed = changed or was_changed
+
+    changed, Weapon_Vars.Durable_Knives = imgui.checkbox("Super Durable Knives", Weapon_Vars.Durable_Knives)
     was_changed = changed or was_changed
 
     if imgui.tree_node("OG Settings") then
