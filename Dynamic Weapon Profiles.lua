@@ -29,6 +29,7 @@ local Weapon_Vars = json.load_file("DWP\\Saved.json") or {
   HNDC_HG = false,
   Harpoon_DMG = false,
   Durable_Knives = false,
+  Free_Knife_Repairs = false,
   Weapon_Profiles = {
     ["1"] = "None",
     ["2"] = "Better Weapon Balance"
@@ -569,37 +570,46 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_02_MAX = 9999
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_02_MAX_INFO  = "9999"
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_03_MAX = 9999
-    WeaponService.Weapons.CMBT.Stats.Dur_LVL_03_MAX_INFO  = "9999"
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_03_MAX_INFO = "9999"
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_04_MAX = 9999
-    WeaponService.Weapons.CMBT.Stats.Dur_LVL_04_MAX_INFO  = "9999"
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_04_MAX_INFO = "9999"
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_05_MAX = 9999
-    WeaponService.Weapons.CMBT.Stats.Dur_LVL_05_MAX_INFO  = "9999"
+    WeaponService.Weapons.CMBT.Stats.Dur_LVL_05_MAX_INFO = "9999"
 
     WeaponService.Weapons.FIGHT.Stats.DurDEF_Max = 9999
     WeaponService.Weapons.FIGHT.Stats.DurSLD_Max = 9999
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_01_MAX = 9999
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_01_MAX_INFO = "9999"
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_02_MAX = 9999
-    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_02_MAX_INFO  = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_02_MAX_INFO = "9999"
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_03_MAX = 9999
-    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_03_MAX_INFO  = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_03_MAX_INFO = "9999"
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_04_MAX = 9999
-    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_04_MAX_INFO  = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_04_MAX_INFO = "9999"
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_05_MAX = 9999
-    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_05_MAX_INFO  = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Dur_LVL_05_MAX_INFO = "9999"
 
     WeaponService.Weapons.PRIM.Stats.DurDEF_Max = 9999
     WeaponService.Weapons.PRIM.Stats.DurSLD_Max = 9999
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_01_MAX = 9999
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_01_MAX_INFO = "9999"
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_02_MAX = 9999
-    WeaponService.Weapons.PRIM.Stats.Dur_LVL_02_MAX_INFO  = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_02_MAX_INFO = "9999"
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_03_MAX = 9999
-    WeaponService.Weapons.PRIM.Stats.Dur_LVL_03_MAX_INFO  = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_03_MAX_INFO = "9999"
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_04_MAX = 9999
-    WeaponService.Weapons.PRIM.Stats.Dur_LVL_04_MAX_INFO  = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_04_MAX_INFO = "9999"
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_05_MAX = 9999
-    WeaponService.Weapons.PRIM.Stats.Dur_LVL_05_MAX_INFO  = "9999"
+    WeaponService.Weapons.PRIM.Stats.Dur_LVL_05_MAX_INFO = "9999"
+  end
+
+  if Weapon_Vars.Free_Knife_Repairs then
+    WeaponService.Weapons.CMBT.Stats.Repair_Cost = 0
+    WeaponService.Weapons.CMBT.Stats.Polish_Cost = 0
+    WeaponService.Weapons.FIGHT.Stats.Repair_Cost = 0
+    WeaponService.Weapons.FIGHT.Stats.Polish_Cost = 0
+    WeaponService.Weapons.PRIM.Stats.Repair_Cost = 0
+    WeaponService.Weapons.PRIM.Stats.Polish_Cost = 0
   end
 end
 
@@ -2087,6 +2097,9 @@ re.on_draw_ui(function()
     was_changed = changed or was_changed
 
     changed, Weapon_Vars.Durable_Knives = imgui.checkbox("Super Durable Knives", Weapon_Vars.Durable_Knives)
+    was_changed = changed or was_changed
+
+    changed, Weapon_Vars.Free_Knife_Repairs = imgui.checkbox("Free Knife Repairs", Weapon_Vars.Free_Knife_Repairs)
     was_changed = changed or was_changed
 
     if imgui.tree_node("OG Settings") then
