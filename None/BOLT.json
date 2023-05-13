@@ -64,7 +64,7 @@
     "HandShake_Time": 6.0,
     "ItemSize": 9,
     "ItemStack": 1,
-    "PumpActionFireRate": 10.0,
+    "PumpActionFireRate": 1.0,
     "RELOAD_LVL_01": 1,
     "RELOAD_LVL_01_COST": 0,
     "RELOAD_LVL_01_INFO": "1",
