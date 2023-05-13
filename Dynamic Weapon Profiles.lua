@@ -214,6 +214,8 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.KIL7.Stats.SMG_RandomFit = 0.0
     WeaponService.Weapons.HNDC.Stats.SMG_Random = 0.0
     WeaponService.Weapons.HNDC.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.BOLT.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.BOLT.Stats.SMG_RandomFit = 0.0
   end
 
   if Weapon_Vars.Always_Focus then
@@ -367,6 +369,11 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.HNDC.Stats.BRK_LVL_03 = 10
     WeaponService.Weapons.HNDC.Stats.BRK_LVL_04 = 10
     WeaponService.Weapons.HNDC.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.BOLT.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.BOLT.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.BOLT.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.BOLT.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.BOLT.Stats.BRK_LVL_05 = 10
   end
 
   if Weapon_Vars.Headshots_Kill then
@@ -416,6 +423,8 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.KIL7.Stats.HG_CritRateEX = 100
     WeaponService.Weapons.HNDC.Stats.HG_CritRate = 100
     WeaponService.Weapons.HNDC.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.BOLT.Stats.HG_CritRate = 100
+    WeaponService.Weapons.BOLT.Stats.HG_CritRateEX = 100
   end
 
   ----/// SLUGS TREE ///-----
@@ -548,6 +557,7 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.BRB.Stats.ReticleType = 100000
     WeaponService.Weapons.KIL7.Stats.ReticleType = 100000
     WeaponService.Weapons.HNDC.Stats.ReticleType = 100000
+    WeaponService.Weapons.BOLT.Stats.ReticleType = 100000
   end
 
   if Weapon_Vars.CQBR_Smg then
