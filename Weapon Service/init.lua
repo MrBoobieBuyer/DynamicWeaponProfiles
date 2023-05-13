@@ -1024,8 +1024,32 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 		if Custom_AttachmentCustoms then
 			for i, AttachmentCategories in ipairs(Custom_AttachmentCustoms) do
 				local Attachment_Params = AttachmentCategories:call("get_AttachmentParams")
-				if Attachment_Params and Attachment_Params[2] then
-					Attachment_Params[2]._ReticleGuiType = weaponStats.ReticleTypeStock
+
+				if Attachment_Params then
+					if Attachment_Params[2] then
+						Attachment_Params[2]._ReticleGuiType = weaponStats.ReticleTypeStock
+					end
+
+					if Attachment_Params[4] then
+						local Attachment_CameraRecoilParam = Attachment_Params[4]:get_field("_CameraRecoilParam")
+
+						if Attachment_CameraRecoilParam then
+							local YawRangeDegStock = Attachment_CameraRecoilParam:get_field("_YawRangeDeg")
+							local PitchRangeDegStock = Attachment_CameraRecoilParam:get_field("_PitchRangeDeg")
+							
+							if YawRangeDegStock then
+								YawRangeDegStock.s = weaponStats.Recoil_YawMin_Stock
+								YawRangeDegStock.r = weaponStats.Recoil_YawMax_Stock
+								write_valuetype(Attachment_CameraRecoilParam, 0x18, YawRangeDegStock)
+							end
+				
+							if PitchRangeDegStock then
+								PitchRangeDegStock.s = weaponStats.Recoil_PitchMin_Stock
+								PitchRangeDegStock.r = weaponStats.Recoil_PitchMax_Stock
+								write_valuetype(Attachment_CameraRecoilParam, 0x20, PitchRangeDegStock)
+							end
+						end
+					end
 				end
 			end
 		end

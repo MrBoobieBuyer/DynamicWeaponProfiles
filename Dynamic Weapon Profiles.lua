@@ -97,7 +97,7 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.CTW.Stats.Focus_CamSub = 370.0
     WeaponService.Weapons.CTW.Stats.HG_BulletGravityIgnore = 40
   end
-  
+
   if Weapon_Vars.No_Recoil then
     WeaponService.Weapons.SG09R.Stats.Recoil_YawMin = 0.0
     WeaponService.Weapons.SG09R.Stats.Recoil_YawMax = 0.0
@@ -726,8 +726,58 @@ local function draw_profile_editor_ui()
         currentWeapon.Stats.ReticleType = tonumber(updatedReticleType)
         WeaponService.apply_weapon_stats(currentWeapon.Id)
       end
+
+      if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" then
+        
+        -- ReticleTypeStock
+        ReticleTypeStockChanged, updatedReticleTypeStock = imgui.input_text("Reticle Type Stock", tostring(currentWeapon.Stats.ReticleTypeStock), 1)
+        if ReticleTypeStockChanged then
+          currentWeapon.Stats.ReticleTypeStock = tonumber(updatedReticleTypeStock)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+
+      end
+
+      imgui.new_line()
+      if currentWeapon.Name == "BOLT" then
+
+        -- HG_BulletGravity
+        HG_BulletGravityChanged, updatedHG_BulletGravity = imgui.input_text("HG Bullet Gravity", tostring(currentWeapon.Stats.HG_BulletGravity), 1)
+        if HG_BulletGravityChanged then
+          currentWeapon.Stats.HG_BulletGravity = tonumber(updatedHG_BulletGravity)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+  
+        -- HG_BulletGravityIgnore
+        HG_BulletGravityIgnoreChanged, updatedHG_BulletGravityIgnore = imgui.input_text("HG Bullet Gravity Ignore", tostring(currentWeapon.Stats.HG_BulletGravityIgnore), 1)
+        if HG_BulletGravityIgnoreChanged then
+          currentWeapon.Stats.HG_BulletGravityIgnore = tonumber(updatedHG_BulletGravityIgnore)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+  
+        imgui.new_line()
+  
+        -- HG_BulletSpeed
+        HG_BulletSpeedChanged, updatedHG_BulletSpeed = imgui.input_text("HG Bullet Speed", tostring(currentWeapon.Stats.HG_BulletSpeed), 1)
+        if HG_BulletSpeedChanged then
+          currentWeapon.Stats.HG_BulletSpeed = tonumber(updatedHG_BulletSpeed)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+  
+        -- HG_Distance
+        HG_DistanceChanged, updatedHG_Distance = imgui.input_text("HG Distance", tostring(currentWeapon.Stats.HG_Distance), 1)
+        if HG_DistanceChanged then
+          currentWeapon.Stats.HG_Distance = tonumber(updatedHG_Distance)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+  
+      end
+  
+
+
       imgui.tree_pop()
     end
+
 
     if (currentWeapon.Type == "HG") or (currentWeapon.Type== "SMG") or (currentWeapon.Type== "SR") or 
       (currentWeapon.Type== "SR_PUMP") or (currentWeapon.Type== "MAG") or (currentWeapon.Type== "MAG_SEMI") then
