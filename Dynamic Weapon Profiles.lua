@@ -68,7 +68,8 @@ local Ammo_Types = {
   [112801600] = "Magnum",
   [112804800] = "Rifle",
   [112803200] = "Shotgun",
-  [112806400] = "SMG"
+  [112806400] = "SMG",
+  [112808000] = "Bolt"
 }
 
 local Reticle_Types = {
