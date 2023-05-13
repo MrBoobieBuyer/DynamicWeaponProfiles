@@ -63,6 +63,52 @@ local Available_Weapons = {
   [23] = "Primal Knife"
 }
 
+local Ammo_Types = {
+  [112800000] = "Handgun",
+  [112801600] = "Magnum",
+  [112804800] = "Rifle",
+  [112803200] = "Shotgun",
+  [112806400] = "SMG"
+}
+
+local Reticle_Types = {
+  [100000] = "None",
+  [600] = "Bow 1",
+  [601] = "Bow 2",
+  [602] = "Bow 3",
+  [800] = "Bolt 1",
+  [801] = "Bolt 2",
+  [802] = "Bolt 3",
+  [803] = "Bolt 4",
+  [804] = "Bolt 5",
+  [0] = "Handgun 1",
+  [1] = "Handgun 2",
+  [2] = "Handgun 3",
+  [3] = "Handgun 4",
+  [4] = "Handgun 5",
+  [5] = "Handgun 6",
+  [6] = "Handgun 7",
+  [500] = "Magnum 1",
+  [501] = "Magnum 2",
+  [502] = "Magnum 3",
+  [400] = "Rifle 1",
+  [401] = "Rifle 2",
+  [900] = "RPG 1",
+  [901] = "RPG 2",
+  [902] = "RPG 3",
+  [100] = "Shotgun 1",
+  [101] = "Shotgun 2",
+  [102] = "Shotgun 3",
+  [103] = "Shotgun 4",
+  [104] = "Shotgun 5",
+  [105] = "Shotgun 6",
+  [106] = "Shotgun 7",
+  [200] = "SMG 1",
+  [201] = "SMG 2",
+  [202] = "SMG 3",
+  [203] = "SMG 4"
+}
+
 local function SetWeapon_DMGValues()
   -- load weapon profile from json files
   local path = Weapon_Vars.Weapon_Profiles[Weapon_Vars.Selected_Profile]
@@ -714,28 +760,26 @@ local function draw_profile_editor_ui()
       end
 
       -- AmmoType
-      AmmoTypeChanged, updatedAmmoType = imgui.input_text("Ammo Type", currentWeapon.Stats.AmmoType, 1)
+      AmmoTypeChanged, updatedAmmoType = imgui.combo("Ammo Type", currentWeapon.Stats.AmmoType, Ammo_Types)
       if AmmoTypeChanged then
-        currentWeapon.Stats.AmmoType = tonumber(updatedAmmoType)
+        currentWeapon.Stats.AmmoType = updatedAmmoType
         WeaponService.apply_weapon_stats(currentWeapon.Id)
       end
 
       -- ReticleType
-      ReticleTypeChanged, updatedReticleType = imgui.input_text("Reticle Type", currentWeapon.Stats.ReticleType, 1)
+      ReticleTypeChanged, updatedReticleType = imgui.combo("Reticle Type", currentWeapon.Stats.ReticleType, Reticle_Types)
       if ReticleTypeChanged then
-        currentWeapon.Stats.ReticleType = tonumber(updatedReticleType)
+        currentWeapon.Stats.ReticleType = updatedReticleType
         WeaponService.apply_weapon_stats(currentWeapon.Id)
       end
 
       if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" then
-        
         -- ReticleTypeStock
-        ReticleTypeStockChanged, updatedReticleTypeStock = imgui.input_text("Reticle Type Stock", tostring(currentWeapon.Stats.ReticleTypeStock), 1)
+        ReticleTypeStockChanged, updatedReticleTypeStock = imgui.combo("Reticle Type Stock", currentWeapon.Stats.ReticleTypeStock, Reticle_Types)
         if ReticleTypeStockChanged then
-          currentWeapon.Stats.ReticleTypeStock = tonumber(updatedReticleTypeStock)
+          currentWeapon.Stats.ReticleTypeStock = updatedReticleTypeStock
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
-
       end
 
       imgui.new_line()
