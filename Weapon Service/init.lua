@@ -1041,12 +1041,20 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 				local Attachment_Params = AttachmentCategories:call("get_AttachmentParams")
 
 				if Attachment_Params then
-					if Attachment_Params[2] then
-						Attachment_Params[2]._ReticleGuiType = weaponStats.ReticleTypeStock
+					local reticleIndex = 2
+					local recoilIndex = 4
+
+					if weaponType == "SMG" then
+						reticleIndex = 3
+						recoilIndex = 5
 					end
 
-					if Attachment_Params[4] then
-						local Attachment_CameraRecoilParam = Attachment_Params[4]:get_field("_CameraRecoilParam")
+					if Attachment_Params[reticleIndex] then
+						Attachment_Params[reticleIndex]._ReticleGuiType = weaponStats.ReticleTypeStock
+					end
+
+					if Attachment_Params[recoilIndex] then
+						local Attachment_CameraRecoilParam = Attachment_Params[recoilIndex]:get_field("_CameraRecoilParam")
 
 						if Attachment_CameraRecoilParam then
 							local YawRangeDegStock = Attachment_CameraRecoilParam:get_field("_YawRangeDeg")
