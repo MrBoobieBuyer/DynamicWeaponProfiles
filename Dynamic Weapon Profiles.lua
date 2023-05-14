@@ -823,7 +823,6 @@ local function draw_profile_editor_ui()
       imgui.tree_pop()
     end
 
-
     if (currentWeapon.Type == "HG") or (currentWeapon.Type== "SMG") or (currentWeapon.Type== "SR") or 
       (currentWeapon.Type== "SR_PUMP") or (currentWeapon.Type== "MAG") or (currentWeapon.Type== "MAG_SEMI") then
       if imgui.tree_node("HG General") then
@@ -932,6 +931,38 @@ local function draw_profile_editor_ui()
         if Recoil_PitchMaxChanged then
           currentWeapon.Stats.Recoil_PitchMax = tonumber(updatedRecoil_PitchMax)
           WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+
+
+        if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" then
+          imgui.new_line()
+          -- Recoil_PitchMin_Stock
+          Recoil_PitchMin_StockChanged, updatedRecoil_PitchMin_Stock = imgui.input_text("Recoil Pitch Min Stock", tostring(currentWeapon.Stats.Recoil_PitchMin_Stock), 1)
+          if Recoil_PitchMin_StockChanged then
+            currentWeapon.Stats.Recoil_PitchMin_Stock = tonumber(updatedRecoil_PitchMin_Stock)
+            WeaponService.apply_weapon_stats(currentWeapon.Id)
+          end
+
+          -- Recoil_PitchMax_Stock
+          Recoil_PitchMax_StockChanged, updatedRecoil_PitchMax_Stock = imgui.input_text("Recoil Pitch Max Stock", tostring(currentWeapon.Stats.Recoil_PitchMax_Stock), 1)
+          if Recoil_PitchMax_StockChanged then
+            currentWeapon.Stats.Recoil_PitchMax_Stock = tonumber(updatedRecoil_PitchMax_Stock)
+            WeaponService.apply_weapon_stats(currentWeapon.Id)
+          end
+
+          -- Recoil_YawMin_Stock
+          Recoil_YawMin_StockChanged, updatedRecoil_YawMin_Stock = imgui.input_text("Recoil Yaw Min Stock", tostring(currentWeapon.Stats.Recoil_YawMin_Stock), 1)
+          if Recoil_YawMin_StockChanged then
+            currentWeapon.Stats.Recoil_YawMin_Stock = tonumber(updatedRecoil_YawMin_Stock)
+            WeaponService.apply_weapon_stats(currentWeapon.Id)
+          end
+
+          -- Recoil_YawMax_Stock
+          Recoil_YawMax_StockChanged, updatedRecoil_YawMax_Stock = imgui.input_text("Recoil Yaw Max Stock", tostring(currentWeapon.Stats.Recoil_YawMax_Stock), 1)
+          if Recoil_YawMax_StockChanged then
+            currentWeapon.Stats.Recoil_YawMax_Stock = tonumber(updatedRecoil_YawMax_Stock)
+            WeaponService.apply_weapon_stats(currentWeapon.Id)
+          end
         end
         imgui.tree_pop()
       end
@@ -1166,6 +1197,37 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
         imgui.tree_pop()
+      end
+
+      if imgui.tree_node("Recoil") then
+        -- Recoil_YawMin
+        Recoil_YawMinChanged, updatedRecoil_YawMin = imgui.input_text("Recoil Yaw Min", currentWeapon.Stats.Recoil_YawMin, 1)
+        if Recoil_YawMinChanged then
+          currentWeapon.Stats.Recoil_YawMin = tonumber(updatedRecoil_YawMin)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+
+        -- Recoil_YawMax
+        Recoil_YawMaxChanged, updatedRecoil_YawMax = imgui.input_text("Recoil Yaw Max", currentWeapon.Stats.Recoil_YawMax, 1)
+        if Recoil_YawMaxChanged then
+          currentWeapon.Stats.Recoil_YawMax = tonumber(updatedRecoil_YawMax)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+
+        -- Recoil_PitchMin
+        Recoil_PitchMinChanged, updatedRecoil_PitchMin = imgui.input_text("Recoil Pitch Min", currentWeapon.Stats.Recoil_PitchMin, 1)
+        if Recoil_PitchMinChanged then
+          currentWeapon.Stats.Recoil_PitchMin = tonumber(updatedRecoil_PitchMin)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+
+        -- Recoil_PitchMax
+        Recoil_PitchMaxChanged, updatedRecoil_PitchMax = imgui.input_text("Recoil Pitch Max", currentWeapon.Stats.Recoil_PitchMax, 1)
+        if Recoil_PitchMaxChanged then
+          currentWeapon.Stats.Recoil_PitchMax = tonumber(updatedRecoil_PitchMax)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+      imgui.tree_pop()
       end
     end
 
