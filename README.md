@@ -52,4 +52,4 @@
 - [x] Weapon stat editor gui that can update jsons
 - [x] Knives
 - [x] Bolt thrower
-- [ ] Mercenaries
+- [x] Mercenaries
