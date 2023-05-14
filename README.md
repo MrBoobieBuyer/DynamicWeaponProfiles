@@ -3,10 +3,11 @@
 ![Dynamic Weapon Profiles Screenshot](/screenshots/dwp_screenshot_1.jpg "Screenshot")
 
 ## What's New?
-* You no longer need to press Enter to apply stat change in the profile editor.
-* Resolved checkbox conflict with Chicago Typewriter.
-* Added a live weapon stat editor! You can now edit and save profiles in game!
-
+* Added knife and bolt thrower support
+* Super Durable Knives checkbox
+* Free Knife Repairs checkbox
+* Combo boxes for ammo and reticle types
+* Bug fixes
 
 ## Profiles
 * Dynamic Weapon Profiles allows you to dynamically change the stats of all weapons by selecting the desired profile in a dropdown menu.
@@ -39,13 +40,16 @@
     - Does not work with stocks equipped for now. This will be fixed.
 14. Del Lago Insta Kill
     - Sets harpoon damage to 100 to kill Del Lago in one shot
+15. Super Durable Knives
+    - Gives main knives 9999 durability
+16. Free Knife Repairs
 
 ## TODO
 - [x] Dynamically check for inventory changes
 - [x] Harpoon damage
-- [ ] Auto update the profiles in saved json
 - [ ] Add EX upgrades to non native weapons, preferably in combination
 - [x] Add json editor
 - [x] Weapon stat editor gui that can update jsons
-- [ ] Knives
-- [ ] Bolt thrower
+- [x] Knives
+- [x] Bolt thrower
+- [ ] Mercenaries
