@@ -154,16 +154,14 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.PUN.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.PUN.Stats.Recoil_PitchMin = 0
     WeaponService.Weapons.PUN.Stats.Recoil_PitchMax = 0
-
     WeaponService.Weapons.RED9.Stats.Recoil_YawMin = 0
     WeaponService.Weapons.RED9.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.RED9.Stats.Recoil_PitchMin = 0
     WeaponService.Weapons.RED9.Stats.Recoil_PitchMax = 0
-    WeaponService.Weapons.RED9.StatsWithStock.Recoil_YawMin = 0
-    WeaponService.Weapons.RED9.StatsWithStock.Recoil_YawMax = 0
-    WeaponService.Weapons.RED9.StatsWithStock.Recoil_PitchMin = 0
-    WeaponService.Weapons.RED9.StatsWithStock.Recoil_PitchMax = 0
-
+    WeaponService.Weapons.RED9.Stats.Recoil_YawMin_Stock = 0
+    WeaponService.Weapons.RED9.Stats.Recoil_YawMax_Stock = 0
+    WeaponService.Weapons.RED9.Stats.Recoil_PitchMin_Stock = 0
+    WeaponService.Weapons.RED9.Stats.Recoil_PitchMax_Stock = 0
     WeaponService.Weapons.BT.Stats.Recoil_YawMin = 0
     WeaponService.Weapons.BT.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.BT.Stats.Recoil_PitchMin = 0
@@ -172,6 +170,10 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.VP70.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.VP70.Stats.Recoil_PitchMin = 0
     WeaponService.Weapons.VP70.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.VP70.Stats.Recoil_YawMin_Stock = 0
+    WeaponService.Weapons.VP70.Stats.Recoil_YawMax_Stock = 0
+    WeaponService.Weapons.VP70.Stats.Recoil_PitchMin_Stock = 0
+    WeaponService.Weapons.VP70.Stats.Recoil_PitchMax_Stock = 0
     WeaponService.Weapons.SEN9.Stats.Recoil_YawMin = 0
     WeaponService.Weapons.SEN9.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.SEN9.Stats.Recoil_PitchMin = 0
@@ -196,6 +198,10 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.TMP.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.TMP.Stats.Recoil_PitchMin = 0
     WeaponService.Weapons.TMP.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.TMP.Stats.Recoil_YawMin_Stock = 0
+    WeaponService.Weapons.TMP.Stats.Recoil_YawMax_Stock = 0
+    WeaponService.Weapons.TMP.Stats.Recoil_PitchMin_Stock = 0
+    WeaponService.Weapons.TMP.Stats.Recoil_PitchMax_Stock = 0
     WeaponService.Weapons.CTW.Stats.Recoil_YawMin = 0
     WeaponService.Weapons.CTW.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.CTW.Stats.Recoil_PitchMin = 0
@@ -588,14 +594,17 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.SG09R.Stats.ReticleType = 100000
     WeaponService.Weapons.PUN.Stats.ReticleType = 100000
     WeaponService.Weapons.RED9.Stats.ReticleType = 100000
+    WeaponService.Weapons.RED9.Stats.ReticleTypeStock = 100000
     WeaponService.Weapons.BT.Stats.ReticleType = 100000
     WeaponService.Weapons.VP70.Stats.ReticleType = 100000
+    WeaponService.Weapons.VP70.Stats.ReticleTypeStock = 100000
     WeaponService.Weapons.SEN9.Stats.ReticleType = 100000
     WeaponService.Weapons.M870.Stats.ReticleType = 100000
     WeaponService.Weapons.BM4.Stats.ReticleType = 100000
     WeaponService.Weapons.STKR.Stats.ReticleType = 100000
     WeaponService.Weapons.SKUL.Stats.ReticleType = 100000
     WeaponService.Weapons.TMP.Stats.ReticleType = 100000
+    WeaponService.Weapons.TMP.Stats.ReticleTypeStock = 100000
     WeaponService.Weapons.CTW.Stats.ReticleType = 100000
     WeaponService.Weapons.LE5.Stats.ReticleType = 100000
     WeaponService.Weapons.M1G.Stats.ReticleType = 100000
@@ -774,7 +783,7 @@ local function draw_profile_editor_ui()
         WeaponService.apply_weapon_stats(currentWeapon.Id)
       end
 
-      if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" then
+      if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" or currentWeapon.Name == "TMP" then
         -- ReticleTypeStock
         ReticleTypeStockChanged, updatedReticleTypeStock = imgui.combo("Reticle Type Stock", currentWeapon.Stats.ReticleTypeStock, Reticle_Types)
         if ReticleTypeStockChanged then
@@ -934,7 +943,7 @@ local function draw_profile_editor_ui()
         end
 
 
-        if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" then
+        if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" or currentWeapon.Name == "TMP" then 
           imgui.new_line()
           -- Recoil_PitchMin_Stock
           Recoil_PitchMin_StockChanged, updatedRecoil_PitchMin_Stock = imgui.input_text("Recoil Pitch Min Stock", tostring(currentWeapon.Stats.Recoil_PitchMin_Stock), 1)

@@ -58,5 +58,6 @@
     "DURABILITY_MAX": 1600,
     "Knife_Speed": 1.05,
     "Polish_Cost": 1000,
-    "Repair_Cost": 1000
+    "Repair_Cost": 1000,
+    "EX_UNBRK": true
 }
