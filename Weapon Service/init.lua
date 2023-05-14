@@ -1174,6 +1174,12 @@ local function cache_owner_equipment(weaponId)
 
 	if (weaponId == Weapons.RED9.Id and (not RED9OwnerEquipment)) or (weaponId == Weapons.TMP.Id and (not TMPOwnerEquipment)) or (weaponId == Weapons.VP70.Id and (not VP70OwnerEquipment)) then
 		local GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId))
+
+		-- support mercenaries mode
+		if not GameObject then
+			GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId) .. "_MC")
+		end
+
 		if GameObject then
 			local Gun = GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
 			if Gun then
