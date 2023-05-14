@@ -121,6 +121,11 @@ local function build_weapon_catalog()
 	if not WeaponDataTables[1] then
 		local WeaponCatalog = Scene:call("findGameObject(System.String)", "WeaponCatalog")
 
+		-- support mercenaries mode
+		if not WeaponCatalog then
+			WeaponCatalog = Scene:call("findGameObject(System.String)", "WeaponCatalog_MC")
+		end
+
 		if WeaponCatalog then
 			local WeaponCatalogRegister = WeaponCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.WeaponCatalogRegister"))
 
@@ -138,6 +143,11 @@ local function build_weapon_catalog()
 
   if not WeaponDetailStages[1] then
 		local WeaponCustomCatalog = Scene:call("findGameObject(System.String)", "WeaponCustomCatalog")
+
+		-- support mercenaries mode
+		if not WeaponCustomCatalog then
+			WeaponCustomCatalog = Scene:call("findGameObject(System.String)", "WeaponCustomCatalog_MC")
+		end
 
 		if WeaponCustomCatalog then
 			local WeaponCustomCatalogRegister = WeaponCustomCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.WeaponCustomCatalogRegister"))
@@ -319,6 +329,11 @@ end
 local function update_gun(weaponId, weaponType, weaponStats)
 	local gunUpdated = false
 	local Gun_GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId))
+
+	-- support mercenaries mode
+	if not Gun_GameObject then
+		Gun_GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId) .. "_MC")
+	end
 
 	if Gun_GameObject then
 		local Gun = Gun_GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
@@ -1150,7 +1165,7 @@ local function update_weapon(weaponId, weaponStats)
 	local weaponDetailCustomUpdated = update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 	local weaponDataTableUpdated = update_weapon_data_table(weaponId, weaponStats)
 	local inventoryItemUpdated = update_inventory_item(weaponId, weaponStats)
-
+	
 	return weaponUpdated and weaponCustomUpdated and weaponDetailCustomUpdated and weaponDataTableUpdated and inventoryItemUpdated
 end
 
