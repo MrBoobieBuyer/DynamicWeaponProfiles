@@ -55,9 +55,8 @@
     "WINC_LVL_03": 2.1,
     "WINC_LVL_04": 2.5,
     "WINC_LVL_05": 2.8,
-    "DURABILITY_MAX": 1600,
     "Knife_Speed": 1.05,
     "Polish_Cost": 1000,
-    "Repair_Cost": 1000,
+    "Repair_Cost": 2000,
     "EX_UNBRK": true
 }
