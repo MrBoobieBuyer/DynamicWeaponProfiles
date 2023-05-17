@@ -95,6 +95,7 @@
     "ReloadSpeedRate": 1.0,
     "ReloadType": 0,
     "ReticleType": 202,
+    "ReticleTypeStock": 202,
     "SMG_Random": 0.04,
     "SMG_RandomFit": 0.01,
     "STOP_LVL_01": -1.0,
