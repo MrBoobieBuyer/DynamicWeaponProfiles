@@ -794,7 +794,22 @@ local function draw_profile_editor_ui()
 
       imgui.new_line()
       if currentWeapon.Name == "BOLT" then
+        
+        -- SMG_Random
+        SMG_RandomChanged, updatedSMG_Random = imgui.input_text("SMG Random", currentWeapon.Stats.SMG_Random, 1)
+        if SMG_RandomChanged then
+          currentWeapon.Stats.SMG_Random = tonumber(updatedSMG_Random)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
 
+        -- SMG_RandomFit
+        SMG_RandomFitChanged, updatedSMG_RandomFit = imgui.input_text("SMG Random Fit", currentWeapon.Stats.SMG_RandomFit, 1)
+        if SMG_RandomFitChanged then
+          currentWeapon.Stats.SMG_RandomFit = tonumber(updatedSMG_RandomFit)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+          end
+
+        imgui.new_line()
         -- HG_BulletGravity
         HG_BulletGravityChanged, updatedHG_BulletGravity = imgui.input_text("HG Bullet Gravity", tostring(currentWeapon.Stats.HG_BulletGravity), 1)
         if HG_BulletGravityChanged then
