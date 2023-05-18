@@ -810,6 +810,23 @@ local function draw_profile_editor_ui()
           end
 
         imgui.new_line()
+
+        -- HG_CritRate
+        HG_CritRateChanged, updatedHG_CritRate = imgui.input_text("HG Crit Rate", currentWeapon.Stats.HG_CritRate, 1)
+        if HG_CritRateChanged then
+          currentWeapon.Stats.HG_CritRate = tonumber(updatedHG_CritRate)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+
+        -- HG_CritRateEX
+        HG_CritRateEXChanged, updatedHG_CritRateEX = imgui.input_text("HG Crit Rate EX", currentWeapon.Stats.HG_CritRateEX, 1)
+        if HG_CritRateEXChanged then
+          currentWeapon.Stats.HG_CritRateEX = tonumber(updatedHG_CritRateEX)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+
+        imgui.new_line()
+
         -- HG_BulletGravity
         HG_BulletGravityChanged, updatedHG_BulletGravity = imgui.input_text("HG Bullet Gravity", tostring(currentWeapon.Stats.HG_BulletGravity), 1)
         if HG_BulletGravityChanged then
@@ -1015,12 +1032,7 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
-        -- SG_Center_BulletCol
-        SG_Center_BulletColChanged, updatedSG_Center_BulletCol = imgui.input_text("SG Center Bullet Col", currentWeapon.Stats.SG_Center_BulletCol, 1)
-        if SG_Center_BulletColChanged then
-          currentWeapon.Stats.SG_Center_BulletCol = tonumber(updatedSG_Center_BulletCol)
-          WeaponService.apply_weapon_stats(currentWeapon.Id)
-        end
+        imgui.new_line()
 
         -- SG_Center_Random
         SG_Center_RandomChanged, updatedSG_Center_Random = imgui.input_text("SG Center Random", currentWeapon.Stats.SG_Center_Random, 1)
@@ -1036,6 +1048,8 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
+        imgui.new_line()
+
         -- SG_Center_CritRate
         SG_Center_CritRateChanged, updatedSG_Center_CritRate = imgui.input_text("SG Center Crit Rate", currentWeapon.Stats.SG_Center_CritRate, 1)
         if SG_Center_CritRateChanged then
@@ -1049,6 +1063,8 @@ local function draw_profile_editor_ui()
           currentWeapon.Stats.SG_Center_CritRate_EX = tonumber(updatedSG_Center_CritRate_EX)
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
+
+        imgui.new_line()
 
         -- SG_Center_BaseDMG
         SG_Center_BaseDMGChanged, updatedSG_Center_BaseDMG = imgui.input_text("SG Center Base DMG", currentWeapon.Stats.SG_Center_BaseDMG, 1)
@@ -1102,12 +1118,7 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
-        -- SG_Around_BulletCol
-        SG_Around_BulletColChanged, updatedSG_Around_BulletCol = imgui.input_text("SG Around Bullet Col", currentWeapon.Stats.SG_Around_BulletCol, 1)
-        if SG_Around_BulletColChanged then
-          currentWeapon.Stats.SG_Around_BulletCol = tonumber(updatedSG_Around_BulletCol)
-          WeaponService.apply_weapon_stats(currentWeapon.Id)
-        end
+        imgui.new_line()
 
         -- SG_Around_Random
         SG_Around_RandomChanged, updatedSG_Around_Random = imgui.input_text("SG Around Random", currentWeapon.Stats.SG_Around_Random, 1)
@@ -1123,6 +1134,8 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
+        imgui.new_line()
+
         -- SG_Around_CritRate
         SG_Around_CritRateChanged, updatedSG_Around_CritRate = imgui.input_text("SG Around Crit Rate", currentWeapon.Stats.SG_Around_CritRate, 1)
         if SG_Around_CritRateChanged then
@@ -1136,6 +1149,8 @@ local function draw_profile_editor_ui()
           currentWeapon.Stats.SG_Around_CritRate_EX = tonumber(updatedSG_Around_CritRate_EX)
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
+
+        imgui.new_line()
 
         -- SG_Around_BaseDMG
         SG_Around_BaseDMGChanged, updatedSG_Around_BaseDMG = imgui.input_text("SG Around Base DMG", currentWeapon.Stats.SG_Around_BaseDMG, 1)
@@ -1165,6 +1180,8 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
+        imgui.new_line()
+
         -- SG_AroundBulletCount
         SG_AroundBulletCountChanged, updatedSG_AroundBulletCount = imgui.input_text("SG Around Bullet Count", currentWeapon.Stats.SG_AroundBulletCount, 1)
         if SG_AroundBulletCountChanged then
@@ -1172,12 +1189,7 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
-        -- SG_CenterBulletCount
-        SG_CenterBulletCountChanged, updatedSG_CenterBulletCount = imgui.input_text("SG Center Bullet Count", currentWeapon.Stats.SG_CenterBulletCount, 1)
-        if SG_CenterBulletCountChanged then
-          currentWeapon.Stats.SG_CenterBulletCount = tonumber(updatedSG_CenterBulletCount)
-          WeaponService.apply_weapon_stats(currentWeapon.Id)
-        end
+        imgui.new_line()
 
         -- SG_InnerRadius
         SG_InnerRadiusChanged, updatedSG_InnerRadius = imgui.input_text("SG Inner Radius", currentWeapon.Stats.SG_InnerRadius, 1)
@@ -1192,6 +1204,8 @@ local function draw_profile_editor_ui()
           currentWeapon.Stats.SG_OuterRadius = tonumber(updatedSG_OuterRadius)
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
+
+        imgui.new_line()
 
         -- SG_AroundVertMin
         SG_AroundVertMinChanged, updatedSG_AroundVertMin = imgui.input_text("SG Around Vert Min", currentWeapon.Stats.SG_AroundVertMin, 1)
@@ -1371,12 +1385,6 @@ local function draw_profile_editor_ui()
           currentWeapon.Stats.HG_BaseWINC = tonumber(updatedHG_BaseWINC)
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
-        -- WINC_LVL_01
-        WINC_LVL_01Changed, updatedWINC_LVL_01 = imgui.input_text("WINC LVL 01", currentWeapon.Stats.WINC_LVL_01, 1)
-        if WINC_LVL_01Changed then
-          currentWeapon.Stats.WINC_LVL_01 = tonumber(updatedWINC_LVL_01)
-          WeaponService.apply_weapon_stats(currentWeapon.Id)
-        end
 
         -- WINC_LVL_02
         WINC_LVL_02Changed, updatedWINC_LVL_02 = imgui.input_text("WINC LVL 02", currentWeapon.Stats.WINC_LVL_02, 1)
@@ -1413,12 +1421,6 @@ local function draw_profile_editor_ui()
         HG_BaseBRKChanged, updatedHG_BaseBRK = imgui.input_text("HG Base BRK", currentWeapon.Stats.HG_BaseBRK, 1)
         if HG_BaseBRKChanged then
           currentWeapon.Stats.HG_BaseBRK = tonumber(updatedHG_BaseBRK)
-          WeaponService.apply_weapon_stats(currentWeapon.Id)
-        end
-        -- BRK_LVL_01
-        BRK_LVL_01Changed, updatedBRK_LVL_01 = imgui.input_text("BRK LVL 01", currentWeapon.Stats.BRK_LVL_01, 1)
-        if BRK_LVL_01Changed then
-          currentWeapon.Stats.BRK_LVL_01 = tonumber(updatedBRK_LVL_01)
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
@@ -1460,12 +1462,6 @@ local function draw_profile_editor_ui()
           WeaponService.apply_weapon_stats(currentWeapon.Id)
         end
 
-        -- STOP_LVL_01
-        STOP_LVL_01Changed, updatedSTOP_LVL_01 = imgui.input_text("STOP LVL 01", currentWeapon.Stats.STOP_LVL_01, 1)
-        if STOP_LVL_01Changed then
-          currentWeapon.Stats.STOP_LVL_01 = tonumber(updatedSTOP_LVL_01)
-          WeaponService.apply_weapon_stats(currentWeapon.Id)
-        end
 
         -- STOP_LVL_02
         STOP_LVL_02Changed, updatedSTOP_LVL_02 = imgui.input_text("STOP LVL 02", currentWeapon.Stats.STOP_LVL_02, 1)
@@ -1617,12 +1613,6 @@ local function draw_profile_editor_ui()
     end
 
     if imgui.tree_node("Reload Speed") then
-      -- ReloadType
-      ReloadTypeChanged, updatedReloadType = imgui.input_text("Reload Type", currentWeapon.Stats.ReloadType, 1)
-      if ReloadTypeChanged then
-        currentWeapon.Stats.ReloadType = tonumber(updatedReloadType)
-        WeaponService.apply_weapon_stats(currentWeapon.Id)
-      end
 
       -- ReloadNum
       ReloadNumChanged, updatedReloadNum = imgui.input_text("Reload Num", currentWeapon.Stats.ReloadNum, 1)
@@ -1757,12 +1747,6 @@ local function draw_profile_editor_ui()
     end
 
     if imgui.tree_node("Rate of Fire") then
-      -- ShootType
-      ShootTypeChanged, updatedShootType = imgui.input_text("Shoot Type", currentWeapon.Stats.ShootType, 1)
-      if ShootTypeChanged then
-        currentWeapon.Stats.ShootType = tonumber(updatedShootType)
-        WeaponService.apply_weapon_stats(currentWeapon.Id)
-      end
 
       -- PumpActionFireRate
       PumpActionFireRateChanged, updatedPumpActionFireRate = imgui.input_text("Pump Action Fire Rate", currentWeapon.Stats.PumpActionFireRate, 1)
@@ -2186,6 +2170,14 @@ local function draw_profile_editor_ui()
 
       imgui.new_line()
 
+     
+        -- DMG_LVL_01
+        DMG_LVL_01Changed, updatedDMG_LVL_01 = imgui.input_text("DMG LVL 01", currentWeapon.Stats.DMG_LVL_01, 1)
+        if DMG_LVL_01Changed then
+          currentWeapon.Stats.DMG_LVL_01 = tonumber(updatedDMG_LVL_01)
+          WeaponService.apply_weapon_stats(currentWeapon.Id)
+        end
+        
       -- DMG_LVL_01_INFO
       DMG_LVL_01_INFOChanged, updatedDMG_LVL_01_INFO = imgui.input_text("DMG LVL 01 Info", currentWeapon.Stats.DMG_LVL_01_INFO, 0)
       if DMG_LVL_01_INFOChanged then
