@@ -1,4 +1,5 @@
 local WeaponDataTables = {}
+local WeaponDataTables_2nd = {}
 local WeaponStages = {}
 local WeaponDetailStages = {}
 local PlayerInventory = {}
@@ -11,6 +12,8 @@ local Scene = nil
 local RED9OwnerEquipment = nil
 local TMPOwnerEquipment = nil
 local VP70OwnerEquipment = nil
+local RED9_AOOwnerEquipment = nil
+local TMP_AOOwnerEquipment = nil
 
 local Weapons = {
 	SG09R = { Id = 4000, Name = "SG09R", Type = "HG", Stats = nil },
@@ -35,7 +38,19 @@ local Weapons = {
 	FIGHT = { Id = 5001, Name = "FIGHT", Type = "K", Stats = nil },
 	PRIM = { Id = 5006, Name = "PRIM", Type = "K", Stats = nil },
   SEN9 = { Id = 6000, Name = "SEN9", Type = "HG", Stats = nil },
-  SKUL = { Id = 6001, Name = "SKUL", Type = "SG", Stats = nil }
+  SKUL = { Id = 6001, Name = "SKUL", Type = "SG", Stats = nil },
+  M870_AO = { Id = 6100, Name = "M870_AO", Type = "SG_PUMP", Stats = nil },
+  CTW_AO = { Id = 6101, Name = "CTW_AO", Type = "SMG", Stats = nil },
+  XBOW_AO = { Id = 6102, Name = "XBOW_AO", Type = "BOW", Stats = nil },
+  BT_AO = { Id = 6103, Name = "BT_AO", Type = "HG", Stats = nil },
+  TMP_AO = { Id = 6104, Name = "TMP_AO", Type = "SMG", CanEquipStock = true, StockEquipped = false, Stats = nil, StatsWithStock = nil },
+  SAR_AO = { Id = 6105, Name = "SAR_AO", Type = "SR", Stats = nil },
+  TAC_AO = { Id = 6107, Name = "TAC_AO", Type = "K", Stats = nil },
+  ELITE_AO = { Id = 6108, Name = "ELITE_AO", Type = "K", Stats = nil },
+  PUN_AO = { Id = 6112, Name = "PUN_AO", Type = "HG", Stats = nil },
+  RED9_AO = { Id = 6113, Name = "RED9_AO", Type = "HG", CanEquipStock = true, StockEquipped = false, Stats = nil, StatsWithStock = nil },
+  M1G_AO = { Id = 6114, Name = "M1G_AO", Type = "SR_PUMP", Stats = nil },
+  M9A3 = { Id = 6300, Name = "M9A3", Type = "HG", Stats = nil },
 }
 
 local WeaponIDTypeMap = {
@@ -62,6 +77,18 @@ local WeaponIDTypeMap = {
   [5006] = "K",
   [6000] = "HG",
   [6001] = "SG",
+  [6100] = "SG_PUMP",
+  [6101] = "SMG",
+  [6102] = "BOW",
+  [6103] = "HG",
+  [6104] = "SMG",
+  [6105] = "SR",
+  [6107] = "K",
+  [6108] = "K",
+  [6112] = "HG",
+  [6113] = "HG",
+  [6114] = "SR_PUMP",
+  [6300] = "HG",
 }
 
 local function reset_values()
@@ -126,6 +153,11 @@ local function build_weapon_catalog()
 			WeaponCatalog = Scene:call("findGameObject(System.String)", "WeaponCatalog_MC")
 		end
 
+		-- support separate ways
+		if not WeaponCatalog then
+			WeaponCatalog = Scene:call("findGameObject(System.String)", "WeaponCatalog_AO")
+		end
+
 		if WeaponCatalog then
 			local WeaponCatalogRegister = WeaponCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.WeaponCatalogRegister"))
 
@@ -141,12 +173,36 @@ local function build_weapon_catalog()
 		end
 	end
 
+  -- support mercenaries mode second catalog
+  if not WeaponDataTables_2nd[1] then
+		local WeaponCatalog = Scene:call("findGameObject(System.String)", "WeaponCatalog_MC_2nd")
+
+		if WeaponCatalog then
+			local WeaponCatalogRegister = WeaponCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.WeaponCatalogRegister"))
+
+			if WeaponCatalogRegister then
+				local WeaponEquipParamCatalogUserData = WeaponCatalogRegister:call("get_WeaponEquipParamCatalogUserData")
+
+				if WeaponEquipParamCatalogUserData then
+					WeaponDataTables_2nd = WeaponEquipParamCatalogUserData:get_field("_DataTable")
+					WeaponDataTables_2nd = WeaponDataTables_2nd and WeaponDataTables_2nd:get_elements() or {}
+					catalogFound = true
+				end
+			end
+		end
+	end
+
   if not WeaponDetailStages[1] then
 		local WeaponCustomCatalog = Scene:call("findGameObject(System.String)", "WeaponCustomCatalog")
 
 		-- support mercenaries mode
 		if not WeaponCustomCatalog then
 			WeaponCustomCatalog = Scene:call("findGameObject(System.String)", "WeaponCustomCatalog_MC")
+		end
+
+		-- support separate ways
+		if not WeaponCustomCatalog then
+			WeaponCustomCatalog = Scene:call("findGameObject(System.String)", "WeaponCustomCatalog_AO")
 		end
 
 		if WeaponCustomCatalog then
@@ -312,6 +368,17 @@ local function get_weapon_data_table(weaponId)
     end
   end
 
+  if WeaponDataTable == nil and WeaponDataTables_2nd[1] then
+    for i, ItemID in ipairs(WeaponDataTables_2nd) do
+      local WeaponIDValue = ItemID:call("get_WeaponID")
+
+      if WeaponIDValue == weaponId then
+        WeaponDataTable = ItemID
+        break
+      end
+    end
+  end
+
   return WeaponDataTable
 end
 
@@ -335,6 +402,11 @@ local function update_gun(weaponId, weaponType, weaponStats)
 		Gun_GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId) .. "_MC")
 	end
 
+	-- support separate ways
+	if not Gun_GameObject then
+		Gun_GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId) .. "_AO")
+	end	
+
 	if Gun_GameObject then
 		local Gun = Gun_GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
 
@@ -348,7 +420,7 @@ local function update_gun(weaponId, weaponType, weaponStats)
 			if Shell then
 				local Shell_UserData = Shell:get_field("_UserData")
 
-				if weaponType == "BOLT" then
+				if weaponType == "BOLT" or weaponType == "BOW" then
 					local Shell_BombSettings = Shell:get_field("_ArrowBombShellGeneratorUserData")
 
 					if Shell_BombSettings then
@@ -818,6 +890,9 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 						local Custom_StoppingRate = Custom_AttackUp:get_field("_StoppingRates")
 						Custom_StoppingRate = Custom_StoppingRate and Custom_StoppingRate:get_elements() or {}
 
+            local Custom_ExplosionRadiusScale = Custom_AttackUp:get_field("_ExplosionRadiusScale")
+						Custom_ExplosionRadiusScale = Custom_ExplosionRadiusScale and Custom_ExplosionRadiusScale:get_elements() or {}
+
 						if Custom_DamageRate and Custom_DamageRate[5] then
 							Custom_DamageRate[1]:set_field("_BaseValue", weaponStats.DMG_LVL_01)
 							Custom_DamageRate[2]:set_field("_BaseValue", weaponStats.DMG_LVL_02)
@@ -849,6 +924,14 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 							Custom_StoppingRate[4]:set_field("_BaseValue", weaponStats.STOP_LVL_04)
 							Custom_StoppingRate[5]:set_field("_BaseValue", weaponStats.STOP_LVL_05)
 						end
+
+            if weaponType == "BOW" then
+              Custom_AttackUp._ExplosionRadiusScale[0] = weaponStats.EXP_RAD_LVL_01
+              Custom_AttackUp._ExplosionRadiusScale[1] = weaponStats.EXP_RAD_LVL_02
+              Custom_AttackUp._ExplosionRadiusScale[2] = weaponStats.EXP_RAD_LVL_03
+              Custom_AttackUp._ExplosionRadiusScale[3] = weaponStats.EXP_RAD_LVL_04
+              Custom_AttackUp._ExplosionRadiusScale[4] = weaponStats.EXP_RAD_LVL_05
+            end
 					else
 						weaponDetailCustomUpdated = false
 					end
@@ -893,7 +976,7 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 					local Custom_ReloadSpeed = IndividualCategories:get_field("_ReloadSpeed")
 
 					if Custom_ReloadSpeed then
-						if weaponType == "HG" or weaponType == "SMG" or weaponType == "SR" or weaponType == "MAG_SEMI" then
+						if weaponType == "HG" or weaponType == "SMG" or weaponType == "SR" or weaponType == "MAG_SEMI" or weaponType == "BOW" then
 							Custom_ReloadSpeed._ReloadSpeedRates[0] = weaponStats.RELOAD_LVL_01
 							Custom_ReloadSpeed._ReloadSpeedRates[1] = weaponStats.RELOAD_LVL_02
 							Custom_ReloadSpeed._ReloadSpeedRates[2] = weaponStats.RELOAD_LVL_03
@@ -1031,6 +1114,14 @@ local function update_weapon_detail_custom(weaponId, weaponType, weaponStats)
 				
 					if Custom_UnbreakableEX then
 						Custom_UnbreakableEX._IsUnbreakable = weaponStats.EX_UNBRK
+					end
+				end
+
+        if Custom_CategoryID == 10 or Custom_CategoryID == "10" then
+					local Custom_BlastRange = LimitBreakCategories:get_field("_LimitBreakBlastRange_1011")
+				
+					if Custom_BlastRange then
+						Custom_BlastRange._BlastRangeScale = weaponStats.EX_BLAST_RANGE
 					end
 				end
 			end
@@ -1188,6 +1279,11 @@ local function cache_owner_equipment(weaponId)
 			GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId) .. "_MC")
 		end
 
+		-- support separate ways
+		if not GameObject then
+			GameObject = Scene:call("findGameObject(System.String)", "wp" .. tostring(weaponId) .. "_AO")
+		end
+
 		if GameObject then
 			local Gun = GameObject:call("getComponent(System.Type)", sdk.typeof("chainsaw.Gun"))
 			if Gun then
@@ -1202,6 +1298,12 @@ local function cache_owner_equipment(weaponId)
 					elseif weaponId == Weapons.VP70.Id then
 						VP70OwnerEquipment = OwnerEquipment
 						Weapons.VP70.StockEquipped = OwnerEquipment:get_IsExistsStock()
+					elseif weaponId == Weapons.RED9_AO.Id then
+						RED9_AOOwnerEquipment = OwnerEquipment
+						Weapons.RED9_AO.StockEquipped = OwnerEquipment:get_IsExistsStock()
+					elseif weaponId == Weapons.TMP_AO.Id then
+						TMP_AOOwnerEquipment = OwnerEquipment
+						Weapons.TMP_AO.StockEquipped = OwnerEquipment:get_IsExistsStock()
 					end
 					log.info("Weapon Service: Found owner equipment for " .. tostring(weaponId))
 					foundOwnerEquipment = true
@@ -1293,6 +1395,26 @@ local function on_frame()
 				log.info("VP70 stock equip changed")
 				Weapons.VP70.StockEquipped = vp70StockEquipped
 				apply_weapon_stats(Weapons.VP70.Id)
+			end
+		end
+
+		-- adjust red 9 when the stock is equiped or unquiped
+		if RED9_AOOwnerEquipment then
+			local red9_AOStockEquipped = RED9_AOOwnerEquipment:get_IsExistsStock()
+			if Weapons.RED9_AO.StockEquipped ~= red9_AOStockEquipped then
+				log.info("Weapon Service: RED9_AO stock equip changed")
+				Weapons.RED9_AO.StockEquipped = red9_AOStockEquipped
+				apply_weapon_stats(Weapons.RED9_AO.Id)
+			end
+		end
+
+		-- adjust tmp when the stock is equiped or unquiped
+		if TMP_AOOwnerEquipment then
+			local tmp_AOStockEquipped = TMP_AOOwnerEquipment:get_IsExistsStock()
+			if Weapons.TMP_AO.StockEquipped ~= tmp_AOStockEquipped then
+				log.info("Weapon Service: TMP_AO stock equip changed")
+				Weapons.TMP_AO.StockEquipped = tmp_AOStockEquipped
+				apply_weapon_stats(Weapons.TMP_AO.Id)
 			end
 		end
 
