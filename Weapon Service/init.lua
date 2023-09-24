@@ -91,6 +91,13 @@ local WeaponIDTypeMap = {
   [6300] = "HG",
 }
 
+local Repair_IDs = {
+  [276435456] = "5000",
+  [276437056] = "5001",
+  [276445056] = "5006",
+  [278206656] = "6107"
+}
+
 local function reset_values()
 	WeaponDataTables = {}
 	WeaponStages = {}
@@ -103,6 +110,8 @@ local function reset_values()
 	RED9OwnerEquipment = nil
 	TMPOwnerEquipment = nil
 	VP70OwnerEquipment = nil
+  RED9_AOOwnerEquipment = nil
+  TMP_AOOwnerEquipment = nil
 end
 
 local function set_weapon_profile(weaponProfile)
@@ -650,6 +659,95 @@ local function update_gun(weaponId, weaponType, weaponStats)
 	end
 
 	return gunUpdated
+end
+
+local function update_knife(weaponId, weaponStats)
+  local knifeUpdated = false
+  local RepairSettings = nil
+  local RepairSetting = nil
+
+  local InGameShopCatalog = Scene:call("findGameObject(System.String)", "InGameShopCatalog_1st")
+
+  if InGameShopCatalog then
+    local CatalogRegister = InGameShopCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.InGameShopCatalogRegister"))
+
+    if CatalogRegister then
+      log.info("Found CatalogRegister in 1st")
+
+      local InGameShopItemSettingUserdata = CatalogRegister:get_field("_InGameShopItemSettingUserdata")
+
+      if InGameShopItemSettingUserdata then
+        log.info("Found InGameShopItemSettingUserdata in 1st")
+
+        RepairSettings = InGameShopItemSettingUserdata:get_field("_RepairSettings")
+      end
+    end
+  end
+
+  if not RepairSettings then
+    InGameShopCatalog = Scene:call("findGameObject(System.String)", "InGameShopCatalog_AO")
+
+    if InGameShopCatalog then
+      local CatalogRegister = InGameShopCatalog:call("getComponent(System.Type)", sdk.typeof("chainsaw.InGameShopCatalogRegister"))
+  
+      if CatalogRegister then
+        log.info("Found CatalogRegister in AO")
+  
+        local InGameShopItemSettingUserdata = CatalogRegister:get_field("_InGameShopItemSettingUserdata")
+  
+        if InGameShopItemSettingUserdata then
+          log.info("Found InGameShopItemSettingUserdata in AO")
+
+          RepairSettings = InGameShopItemSettingUserdata:get_field("_RepairSettings")
+        end
+      end
+    end
+  end
+
+  if RepairSettings then
+    log.info("Found RepairSettings")
+
+    for i=0,4 do
+      local SettingItemId = RepairSettings[i]:get_field("_ItemId")
+
+      if SettingItemId then
+        if Repair_IDs[SettingItemId] and Repair_IDs[SettingItemId] == tostring(weaponId) then
+          RepairSetting = RepairSettings[i]
+          break
+        end
+      end
+    end
+  end
+
+  if RepairSetting then
+    log.info("Found RepairSetting for " .. weaponId)
+
+    local Settings = RepairSetting:get_field("_Settings")
+
+    if Settings then
+      log.info("Found Settings for " .. weaponId)
+
+      Settings[0]._Commission = weaponStats.Rank_10_Commission
+      Settings[0]._DurabilityCost = weaponStats.Rank_10_DurabilityCost
+      Settings[0]._RepairCost = weaponStats.Rank_10_RepairCost
+
+      Settings[1]._Commission = weaponStats.Rank_20_Commission
+      Settings[1]._DurabilityCost = weaponStats.Rank_20_DurabilityCost
+      Settings[1]._RepairCost = weaponStats.Rank_20_RepairCost
+
+      Settings[2]._Commission = weaponStats.Rank_30_Commission
+      Settings[2]._DurabilityCost = weaponStats.Rank_30_DurabilityCost
+      Settings[2]._RepairCost = weaponStats.Rank_30_RepairCost
+
+      Settings[3]._Commission = weaponStats.Rank_40_Commission
+      Settings[3]._DurabilityCost = weaponStats.Rank_40_DurabilityCost
+      Settings[3]._RepairCost = weaponStats.Rank_40_RepairCost
+
+      knifeUpdated = true
+    end
+  end
+
+  return knifeUpdated
 end
 
 local function update_weapon_custom(weaponId, weaponStats)
@@ -1255,7 +1353,7 @@ local function update_weapon(weaponId, weaponStats)
 
 	-- skip gun updates for knives
 	if weaponType == "K" then
-		weaponUpdated = true
+		weaponUpdated = update_knife(weaponId, weaponStats)
 	else
 		weaponUpdated = update_gun(weaponId, weaponType, weaponStats)
 	end
