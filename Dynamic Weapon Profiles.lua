@@ -60,7 +60,18 @@ local Available_Weapons = {
   [20] = "Bolt Thrower",
   [21] = "Combat Knife",
   [22] = "Fighting Knife",
-  [23] = "Primal Knife"
+  [23] = "Primal Knife",
+  [24] = "Blacktail AC (SW)",
+  [25] = "Punisher MC (SW)",
+  [26] = "Red 9 (SW)",
+  [27] = "Sawed-off W-870 (SW)",
+  [28] = "TMP (SW)",
+  [29] = "Chicago Sweeper (SW)",
+  [30] = "SR M1903 (SW)",
+  [31] = "Stingray (SW)",
+  [32] = "Blast Crossbow (SW)",
+  [33] = "Tactical Knife (SW)",
+  [34] = "Elite Knife (SW)"
 }
 
 local Ammo_Types = {
@@ -69,7 +80,8 @@ local Ammo_Types = {
   [112804800] = "Rifle",
   [112803200] = "Shotgun",
   [112806400] = "SMG",
-  [112808000] = "Bolt"
+  [112808000] = "Bolt",
+  [112480000] = "Blast Arrows"
 }
 
 local Reticle_Types = {
@@ -143,6 +155,29 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.CTW.Stats.Focus_MoveSub = 370.0
     WeaponService.Weapons.CTW.Stats.Focus_CamSub = 370.0
     WeaponService.Weapons.CTW.Stats.HG_BulletGravityIgnore = 40
+    WeaponService.Weapons.CTW_AO.Stats.ReticleType = 203
+    WeaponService.Weapons.CTW_AO.Stats.HG_Distance = 300.0
+    WeaponService.Weapons.CTW_AO.Stats.SMG_Random = 0.01
+    WeaponService.Weapons.CTW_AO.Stats.SMG_RandomFit = 0.005
+    WeaponService.Weapons.CTW_AO.Stats.HG_BaseDMG = 5.0
+    WeaponService.Weapons.CTW_AO.Stats.HG_BaseWINC = 2.0
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_YawMin = -0.2
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_YawMax = 0.4
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_PitchMin = -0.3
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_PitchMax = 0.8
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_01_INFO = "2.00"
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_02_INFO = "4.00"
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_03_INFO = "6.00"
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_04_INFO = "8.00"
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_05_INFO = "10.0"
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_02 = 10
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_03 = 15
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_04 = 20
+    WeaponService.Weapons.CTW_AO.Stats.DMG_LVL_05 = 25
+    WeaponService.Weapons.CTW_AO.Stats.Focus_HoldAdd = 360.0
+    WeaponService.Weapons.CTW_AO.Stats.Focus_MoveSub = 370.0
+    WeaponService.Weapons.CTW_AO.Stats.Focus_CamSub = 370.0
+    WeaponService.Weapons.CTW_AO.Stats.HG_BulletGravityIgnore = 40
   end
 
   if Weapon_Vars.No_Recoil then
@@ -234,6 +269,50 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.HNDC.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.HNDC.Stats.Recoil_PitchMin = 0
     WeaponService.Weapons.HNDC.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.M1G_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.M1G_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.M1G_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.M1G_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.SAR_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.SAR_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.SAR_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.SAR_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.PUN_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.PUN_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.PUN_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.PUN_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_YawMin_Stock = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_YawMax_Stock = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_PitchMin_Stock = 0
+    WeaponService.Weapons.RED9_AO.Stats.Recoil_PitchMax_Stock = 0
+    WeaponService.Weapons.BT_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.BT_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.BT_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.BT_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_YawMin_Stock = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_YawMax_Stock = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_PitchMin_Stock = 0
+    WeaponService.Weapons.TMP_AO.Stats.Recoil_PitchMax_Stock = 0
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.CTW_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.M870_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.M870_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.M870_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.M870_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.XBOW_AO.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.XBOW_AO.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.XBOW_AO.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.XBOW_AO.Stats.Recoil_PitchMax = 0
   end
 
   if Weapon_Vars.No_Spread then
@@ -269,6 +348,22 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.HNDC.Stats.SMG_RandomFit = 0.0
     WeaponService.Weapons.BOLT.Stats.SMG_Random = 0.0
     WeaponService.Weapons.BOLT.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.PUN_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.PUN_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.RED9_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.RED9_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.BT_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.BT_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.TMP_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.TMP_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.CTW_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.CTW_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.M1G_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.M1G_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.SAR_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.SAR_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.XBOW_AO.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.XBOW_AO.Stats.SMG_RandomFit = 0.0
   end
 
   if Weapon_Vars.Always_Focus then
@@ -302,6 +397,20 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.KIL7.Stats.Focus_HoldAdd = 1000
     WeaponService.Weapons.HNDC.Stats.Focus_Limit = 0.0
     WeaponService.Weapons.HNDC.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.M1G_AO.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.M1G_AO.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.SAR_AO.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.SAR_AO.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.TMP_AO.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.TMP_AO.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.CTW_AO.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.CTW_AO.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.PUN_AO.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.PUN_AO.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.RED9_AO.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.RED9_AO.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.BT_AO.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.BT_AO.Stats.Focus_HoldAdd = 1000
   end
 
   if Weapon_Vars.No_Ammo_Cost then
@@ -324,6 +433,15 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.BRB.Stats.BaseAmmoCost = 0
     WeaponService.Weapons.KIL7.Stats.BaseAmmoCost = 0
     WeaponService.Weapons.HNDC.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.M1G_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.SAR_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.TMP_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.CTW_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.PUN_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.RED9_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.BT_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.M870_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.XBOW_AO.Stats.BaseAmmoCost = 0
   end
 
   if Weapon_Vars.Extra_Break then
@@ -427,6 +545,51 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.BOLT.Stats.BRK_LVL_03 = 10
     WeaponService.Weapons.BOLT.Stats.BRK_LVL_04 = 10
     WeaponService.Weapons.BOLT.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.M1G_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.M1G_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.M1G_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.M1G_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.M1G_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.SAR_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.SAR_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.SAR_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.SAR_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.SAR_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.TMP_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.TMP_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.TMP_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.TMP_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.TMP_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.CTW_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.CTW_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.CTW_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.CTW_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.CTW_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.PUN_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.PUN_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.PUN_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.PUN_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.PUN_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.RED9_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.RED9_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.RED9_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.RED9_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.RED9_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.M870_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.M870_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.M870_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.M870_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.M870_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.BT_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.BT_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.BT_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.BT_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.BT_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.XBOW_AO.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.XBOW_AO.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.XBOW_AO.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.XBOW_AO.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.XBOW_AO.Stats.BRK_LVL_05 = 10
   end
 
   if Weapon_Vars.Headshots_Kill then
@@ -478,6 +641,24 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.HNDC.Stats.HG_CritRateEX = 100
     WeaponService.Weapons.BOLT.Stats.HG_CritRate = 100
     WeaponService.Weapons.BOLT.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.M1G_AO.Stats.HG_CritRate = 100
+    WeaponService.Weapons.M1G_AO.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.SAR_AO.Stats.HG_CritRate = 100
+    WeaponService.Weapons.SAR_AO.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.TMP_AO.Stats.HG_CritRate = 100
+    WeaponService.Weapons.TMP_AO.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.CTW_AO.Stats.HG_CritRate = 100
+    WeaponService.Weapons.CTW_AO.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.PUN_AO.Stats.HG_CritRate = 100
+    WeaponService.Weapons.PUN_AO.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.RED9_AO.Stats.HG_CritRate = 100
+    WeaponService.Weapons.RED9_AO.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.M870_AO.Stats.SG_Center_CritRate = 100
+    WeaponService.Weapons.M870_AO.Stats.SG_Center_CritRate_EX = 100
+    WeaponService.Weapons.M870_AO.Stats.SG_Around_CritRate = 100
+    WeaponService.Weapons.M870_AO.Stats.SG_Around_CritRate_EX = 100
+    WeaponService.Weapons.BT_AO.Stats.HG_CritRate = 100
+    WeaponService.Weapons.BT_AO.Stats.HG_CritRateEX = 100
   end
 
   ----/// SLUGS TREE ///-----
@@ -515,6 +696,21 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.M870.Stats.DMG_LVL_03 = 1.75
     WeaponService.Weapons.M870.Stats.DMG_LVL_04 = 2.0
     WeaponService.Weapons.M870.Stats.DMG_LVL_05 = 2.25
+    WeaponService.Weapons.M870_AO.Stats.ReticleType = 1
+    WeaponService.Weapons.M870_AO.Stats.SG_Center_Random = 0.003
+    WeaponService.Weapons.M870_AO.Stats.SG_Center_RandomFit = 0.003
+    WeaponService.Weapons.M870_AO.Stats.SG_AroundBulletCount = 0
+    WeaponService.Weapons.M870_AO.Stats.SG_CenterLife_Distance = 300
+    WeaponService.Weapons.M870_AO.Stats.SG_Center_BaseDMG = 1.25
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_01_INFO = "7.00"
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_02_INFO = "8.40"
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_03_INFO = "9.80"
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_04_INFO = "11.20"
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_05_INFO = "12.60"
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_02 = 1.5
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_03 = 1.75
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_04 = 2.0
+    WeaponService.Weapons.M870_AO.Stats.DMG_LVL_05 = 2.25
   end
 
   if Weapon_Vars.SKUL_Slug then
@@ -614,6 +810,16 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.KIL7.Stats.ReticleType = 100000
     WeaponService.Weapons.HNDC.Stats.ReticleType = 100000
     WeaponService.Weapons.BOLT.Stats.ReticleType = 100000
+    WeaponService.Weapons.M1G_AO.Stats.ReticleType = 100000
+    WeaponService.Weapons.SAR_AO.Stats.ReticleType = 100000
+    WeaponService.Weapons.TMP_AO.Stats.ReticleType = 100000
+    WeaponService.Weapons.TMP_AO.Stats.ReticleTypeStock = 100000
+    WeaponService.Weapons.CTW_AO.Stats.ReticleType = 100000
+    WeaponService.Weapons.PUN_AO.Stats.ReticleType = 100000
+    WeaponService.Weapons.RED9_AO.Stats.ReticleType = 100000
+    WeaponService.Weapons.RED9_AO.Stats.ReticleTypeStock = 100000
+    WeaponService.Weapons.M870_AO.Stats.ReticleType = 100000
+    WeaponService.Weapons.BT_AO.Stats.ReticleType = 100000
   end
 
   if Weapon_Vars.CQBR_Smg then
@@ -645,6 +851,10 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_04_MAX_INFO = "9999"
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_05_MAX = 9999
     WeaponService.Weapons.CMBT.Stats.Dur_LVL_05_MAX_INFO = "9999"
+    WeaponService.Weapons.CMBT.Stats.Rank_10_DurabilityCost = 0.1
+    WeaponService.Weapons.CMBT.Stats.Rank_20_DurabilityCost = 0.1
+    WeaponService.Weapons.CMBT.Stats.Rank_30_DurabilityCost = 0.1
+    WeaponService.Weapons.CMBT.Stats.Rank_40_DurabilityCost = 0.1
 
     WeaponService.Weapons.FIGHT.Stats.DurDEF_Max = 9999
     WeaponService.Weapons.FIGHT.Stats.DurSLD_Max = 9999
@@ -658,6 +868,11 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_04_MAX_INFO = "9999"
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_05_MAX = 9999
     WeaponService.Weapons.FIGHT.Stats.Dur_LVL_05_MAX_INFO = "9999"
+    WeaponService.Weapons.FIGHT.Stats.Rank_10_DurabilityCost = 0.1
+    WeaponService.Weapons.FIGHT.Stats.Rank_20_DurabilityCost = 0.1
+    WeaponService.Weapons.FIGHT.Stats.Rank_30_DurabilityCost = 0.1
+    WeaponService.Weapons.FIGHT.Stats.Rank_40_DurabilityCost = 0.1
+
 
     WeaponService.Weapons.PRIM.Stats.DurDEF_Max = 9999
     WeaponService.Weapons.PRIM.Stats.DurSLD_Max = 9999
@@ -671,6 +886,28 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_04_MAX_INFO = "9999"
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_05_MAX = 9999
     WeaponService.Weapons.PRIM.Stats.Dur_LVL_05_MAX_INFO = "9999"
+    WeaponService.Weapons.PRIM.Stats.Rank_10_DurabilityCost = 0.1
+    WeaponService.Weapons.PRIM.Stats.Rank_20_DurabilityCost = 0.1
+    WeaponService.Weapons.PRIM.Stats.Rank_30_DurabilityCost = 0.1
+    WeaponService.Weapons.PRIM.Stats.Rank_40_DurabilityCost = 0.1
+
+    WeaponService.Weapons.TAC_AO.Stats.DurDEF_Max = 9999
+    WeaponService.Weapons.TAC_AO.Stats.DurSLD_Max = 9999
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_01_MAX = 9999
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_01_MAX_INFO = "9999"
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_02_MAX = 9999
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_02_MAX_INFO = "9999"
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_03_MAX = 9999
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_03_MAX_INFO = "9999"
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_04_MAX = 9999
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_04_MAX_INFO = "9999"
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_05_MAX = 9999
+    WeaponService.Weapons.TAC_AO.Stats.Dur_LVL_05_MAX_INFO = "9999"
+    WeaponService.Weapons.TAC_AO.Stats.Rank_10_DurabilityCost = 0.1
+    WeaponService.Weapons.TAC_AO.Stats.Rank_20_DurabilityCost = 0.1
+    WeaponService.Weapons.TAC_AO.Stats.Rank_30_DurabilityCost = 0.1
+    WeaponService.Weapons.TAC_AO.Stats.Rank_40_DurabilityCost = 0.1
+
   end
 
   if Weapon_Vars.Free_Knife_Repairs then
@@ -680,6 +917,54 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.FIGHT.Stats.Polish_Cost = 0
     WeaponService.Weapons.PRIM.Stats.Repair_Cost = 0
     WeaponService.Weapons.PRIM.Stats.Polish_Cost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_10_Commission = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_10_DurabilityCost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_10_RepairCost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_20_Commission = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_20_DurabilityCost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_20_RepairCost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_30_Commission = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_30_DurabilityCost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_30_RepairCost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_40_Commission = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_40_DurabilityCost = 0
+    WeaponService.Weapons.CMBT.Stats.Rank_40_RepairCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_10_Commission = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_10_DurabilityCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_10_RepairCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_20_Commission = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_20_DurabilityCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_20_RepairCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_30_Commission = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_30_DurabilityCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_30_RepairCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_40_Commission = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_40_DurabilityCost = 0
+    WeaponService.Weapons.FIGHT.Stats.Rank_40_RepairCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_10_Commission = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_10_DurabilityCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_10_RepairCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_20_Commission = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_20_DurabilityCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_20_RepairCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_30_Commission = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_30_DurabilityCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_30_RepairCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_40_Commission = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_40_DurabilityCost = 0
+    WeaponService.Weapons.PRIM.Stats.Rank_40_RepairCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_10_Commission = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_10_DurabilityCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_10_RepairCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_20_Commission = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_20_DurabilityCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_20_RepairCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_30_Commission = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_30_DurabilityCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_30_RepairCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_40_Commission = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_40_DurabilityCost = 0
+    WeaponService.Weapons.TAC_AO.Stats.Rank_40_RepairCost = 0
   end
 end
 
@@ -756,6 +1041,28 @@ local function draw_profile_editor_ui()
     currentWeapon = WeaponService.Weapons.FIGHT
   elseif Selected_Weapon == 23 then
     currentWeapon = WeaponService.Weapons.PRIM
+  elseif Selected_Weapon == 24 then
+    currentWeapon = WeaponService.Weapons.BT_AO
+  elseif Selected_Weapon == 25 then
+    currentWeapon = WeaponService.Weapons.PUN_AO
+  elseif Selected_Weapon == 26 then
+    currentWeapon = WeaponService.Weapons.RED9_AO
+  elseif Selected_Weapon == 27 then
+    currentWeapon = WeaponService.Weapons.M870_AO
+  elseif Selected_Weapon == 28 then
+    currentWeapon = WeaponService.Weapons.TMP_AO
+  elseif Selected_Weapon == 29 then
+    currentWeapon = WeaponService.Weapons.CTW_AO
+  elseif Selected_Weapon == 30 then
+    currentWeapon = WeaponService.Weapons.M1G_AO
+  elseif Selected_Weapon == 31 then
+    currentWeapon = WeaponService.Weapons.SAR_AO
+  elseif Selected_Weapon == 32 then
+    currentWeapon = WeaponService.Weapons.XBOW_AO
+  elseif Selected_Weapon == 33 then
+    currentWeapon = WeaponService.Weapons.TAC_AO
+  elseif Selected_Weapon == 34 then
+    currentWeapon = WeaponService.Weapons.ELITE_AO
   end
 
   imgui.new_line()
@@ -783,7 +1090,7 @@ local function draw_profile_editor_ui()
         WeaponService.apply_weapon_stats(currentWeapon.Id)
       end
 
-      if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" or currentWeapon.Name == "TMP" then
+      if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" or currentWeapon.Name == "TMP" or currentWeapon.Name == "TMP_AO" or currentWeapon.Name == "RED9_AO" then
         -- ReticleTypeStock
         ReticleTypeStockChanged, updatedReticleTypeStock = imgui.combo("Reticle Type Stock", currentWeapon.Stats.ReticleTypeStock, Reticle_Types)
         if ReticleTypeStockChanged then
@@ -975,7 +1282,7 @@ local function draw_profile_editor_ui()
         end
 
 
-        if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" or currentWeapon.Name == "TMP" then 
+        if currentWeapon.Name == "RED9" or currentWeapon.Name == "VP70" or currentWeapon.Name == "TMP" or currentWeapon.Name == "TMP_AO" or currentWeapon.Name == "RED9_AO" then 
           imgui.new_line()
           -- Recoil_PitchMin_Stock
           Recoil_PitchMin_StockChanged, updatedRecoil_PitchMin_Stock = imgui.input_text("Recoil Pitch Min Stock", tostring(currentWeapon.Stats.Recoil_PitchMin_Stock), 1)
@@ -1492,6 +1799,39 @@ local function draw_profile_editor_ui()
         end
         imgui.tree_pop()
       end
+        if currentWeapon.Name == "XBOW_AO" then
+          if imgui.tree_node("Blast Radius") then
+            -- EXP_RAD_LVL_02
+            EXP_RAD_LVL_02Changed, updatedEXP_RAD_LVL_02 = imgui.input_text("EXP RAD LVL 02", currentWeapon.Stats.EXP_RAD_LVL_02, 1)
+            if EXP_RAD_LVL_02Changed then
+                currentWeapon.Stats.EXP_RAD_LVL_02 = tonumber(updatedEXP_RAD_LVL_02)
+                WeaponService.apply_weapon_stats(currentWeapon.Id)
+            end
+            
+            -- EXP_RAD_LVL_03
+            EXP_RAD_LVL_03Changed, updatedEXP_RAD_LVL_03 = imgui.input_text("EXP RAD LVL 03", currentWeapon.Stats.EXP_RAD_LVL_03, 1)
+            if EXP_RAD_LVL_03Changed then
+                currentWeapon.Stats.EXP_RAD_LVL_03 = tonumber(updatedEXP_RAD_LVL_03)
+                WeaponService.apply_weapon_stats(currentWeapon.Id)
+            end
+            
+            -- EXP_RAD_LVL_04
+            EXP_RAD_LVL_04Changed, updatedEXP_RAD_LVL_04 = imgui.input_text("EXP RAD LVL 04", currentWeapon.Stats.EXP_RAD_LVL_04, 1)
+            if EXP_RAD_LVL_04Changed then
+                currentWeapon.Stats.EXP_RAD_LVL_04 = tonumber(updatedEXP_RAD_LVL_04)
+                WeaponService.apply_weapon_stats(currentWeapon.Id)
+            end
+            
+            -- EXP_RAD_LVL_05
+            EXP_RAD_LVL_05Changed, updatedEXP_RAD_LVL_05 = imgui.input_text("EXP RAD LVL 05", currentWeapon.Stats.EXP_RAD_LVL_05, 1)
+            if EXP_RAD_LVL_05Changed then
+                currentWeapon.Stats.EXP_RAD_LVL_05 = tonumber(updatedEXP_RAD_LVL_05)
+                WeaponService.apply_weapon_stats(currentWeapon.Id)
+            end
+            
+            imgui.tree_pop()
+          end  end
+    
     end
 
     if imgui.tree_node("Capacity") then
@@ -1927,7 +2267,7 @@ local function draw_profile_editor_ui()
     end
     -- POWER EX
     if currentWeapon.Name == "RED9" or currentWeapon.Name== "BT" or currentWeapon.Name== "BRB" or currentWeapon.Name== "BM4" or currentWeapon.Name== "TMP" or
-      currentWeapon.Name== "M1G" or currentWeapon.Name== "CQBR" then
+      currentWeapon.Name== "M1G" or currentWeapon.Name== "CQBR" or currentWeapon.Name== "M1G_AO" or currentWeapon.Name== "TMP_AO" or currentWeapon.Name== "RED9_AO" or currentWeapon.Name== "BT_AO" or currentWeapon.Name== "M870_AO"  then
       if imgui.tree_node("Exclusive") then
         -- EX_DMG
         EX_DMGChanged, updatedEX_DMG = imgui.input_text("EX_DMG", currentWeapon.Stats.EX_DMG, 1)
@@ -1967,7 +2307,7 @@ local function draw_profile_editor_ui()
       end
     end
 
-    if currentWeapon.Name== "M870" or currentWeapon.Name== "SKUL" then
+    if currentWeapon.Name== "M870" or currentWeapon.Name== "SKUL" or currentWeapon.Name== "M870_AO" then
       if imgui.tree_node("Exclusive") then
 
         -- EX_SG_DMG
@@ -2036,7 +2376,7 @@ local function draw_profile_editor_ui()
     end
 
     -- PENETRATION EX
-    if currentWeapon.Name== "PUN" or currentWeapon.Name== "LE5" then
+    if currentWeapon.Name== "PUN" or currentWeapon.Name== "LE5" or currentWeapon.Name== "PUN_AO" then
       if imgui.tree_node("Exclusive") then
         -- EX_PIRC
         EX_PIRCChanged, updatedEX_PIRC = imgui.input_text("EX_PIRC", currentWeapon.Stats.EX_PIRC, 1)
@@ -2111,7 +2451,7 @@ local function draw_profile_editor_ui()
     end
 
     -- INFINITE AMMO EX
-    if currentWeapon.Name== "HNDC" or currentWeapon.Name== "CTW" then
+    if currentWeapon.Name== "HNDC" or currentWeapon.Name== "CTW" or currentWeapon.Name== "CTW_AO" then
       if imgui.tree_node("Exclusive") then
         -- EX_COST
         EX_COSTChanged, updatedEX_COST = imgui.input_text("EX_COST", currentWeapon.Stats.EX_COST, 1)
@@ -2125,7 +2465,7 @@ local function draw_profile_editor_ui()
     end
 
     -- RATE OF FIRE EX
-    if currentWeapon.Name== "SAR" then
+    if currentWeapon.Name== "SAR" or currentWeapon.Name== "SAR_AO" then
       if imgui.tree_node("Exclusive") then
         -- EX_ROF
         EX_ROFChanged, updatedEX_ROF = imgui.input_text("EX_ROF", currentWeapon.Stats.EX_ROF, 1)
@@ -2145,6 +2485,28 @@ local function draw_profile_editor_ui()
       end
     end
   end
+
+-- Blast Radius EX
+if currentWeapon.Name == "XBOW_AO" then
+  if imgui.tree_node("Exclusive") then
+    -- EX_BLAST_RANGE
+    EX_BLAST_RANGEChanged, updatedEX_BLAST_RANGE = imgui.input_text("EX_BLAST_RANGE", currentWeapon.Stats.EX_BLAST_RANGE, 1)
+    if EX_BLAST_RANGEChanged then
+      currentWeapon.Stats.EX_BLAST_RANGE = tonumber(updatedEX_BLAST_RANGE)
+      WeaponService.apply_weapon_stats(currentWeapon.Id)
+    end
+    
+    -- EX_COST
+    EX_COSTChanged, updatedEX_COST = imgui.input_text("EX_COST", currentWeapon.Stats.EX_COST, 1)
+    if EX_COSTChanged then
+      currentWeapon.Stats.EX_COST = tonumber(updatedEX_COST)
+      WeaponService.apply_weapon_stats(currentWeapon.Id)
+    end
+    
+    imgui.tree_pop()
+  end
+end
+
 
   if currentWeapon.Type == "K" then
     if imgui.tree_node("General") then
@@ -2558,9 +2920,104 @@ local function draw_profile_editor_ui()
     imgui.tree_pop()
     end
 
+    if imgui.tree_node("Repairs") then
+
+      -- Rank_10_Commission
+      Rank_10_CommissionChanged, updatedRank_10_Commission = imgui.input_text("Rank 10 Commission", currentWeapon.Stats.Rank_10_Commission, 1)
+      if Rank_10_CommissionChanged then
+        currentWeapon.Stats.Rank_10_Commission = tonumber(updatedRank_10_Commission)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_10_DurabilityCost
+      Rank_10_DurabilityCostChanged, updatedRank_10_DurabilityCost = imgui.input_text("Rank 10 DurabilityCost", currentWeapon.Stats.Rank_10_DurabilityCost, 1)
+      if Rank_10_DurabilityCostChanged then
+        currentWeapon.Stats.Rank_10_DurabilityCost = tonumber(updatedRank_10_DurabilityCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_10_RepairCost
+      Rank_10_RepairCostChanged, updatedRank_10_RepairCost = imgui.input_text("Rank 10 RepairCost", currentWeapon.Stats.Rank_10_RepairCost, 1)
+      if Rank_10_RepairCostChanged then
+        currentWeapon.Stats.Rank_10_RepairCost = tonumber(updatedRank_10_RepairCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      imgui.new_line()
+
+      -- Rank_20_Commission
+      Rank_20_CommissionChanged, updatedRank_20_Commission = imgui.input_text("Rank 20 Commission", currentWeapon.Stats.Rank_20_Commission, 1)
+      if Rank_20_CommissionChanged then
+        currentWeapon.Stats.Rank_20_Commission = tonumber(updatedRank_20_Commission)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_20_DurabilityCost
+      Rank_20_DurabilityCostChanged, updatedRank_20_DurabilityCost = imgui.input_text("Rank 20 DurabilityCost", currentWeapon.Stats.Rank_20_DurabilityCost, 1)
+      if Rank_20_DurabilityCostChanged then
+        currentWeapon.Stats.Rank_20_DurabilityCost = tonumber(updatedRank_20_DurabilityCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_20_RepairCost
+      Rank_20_RepairCostChanged, updatedRank_20_RepairCost = imgui.input_text("Rank 20 RepairCost", currentWeapon.Stats.Rank_20_RepairCost, 1)
+      if Rank_20_RepairCostChanged then
+        currentWeapon.Stats.Rank_20_RepairCost = tonumber(updatedRank_20_RepairCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+
+      end   
+      imgui.new_line()
+
+      -- Rank_30_Commission
+      Rank_30_CommissionChanged, updatedRank_30_Commission = imgui.input_text("Rank 30 Commission", currentWeapon.Stats.Rank_30_Commission, 1)
+      if Rank_30_CommissionChanged then
+        currentWeapon.Stats.Rank_30_Commission = tonumber(updatedRank_30_Commission)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_30_DurabilityCost
+      Rank_30_DurabilityCostChanged, updatedRank_30_DurabilityCost = imgui.input_text("Rank 30 DurabilityCost", currentWeapon.Stats.Rank_30_DurabilityCost, 1)
+      if Rank_30_DurabilityCostChanged then
+        currentWeapon.Stats.Rank_30_DurabilityCost = tonumber(updatedRank_30_DurabilityCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_30_RepairCost
+      Rank_30_RepairCostChanged, updatedRank_30_RepairCost = imgui.input_text("Rank 30 RepairCost", currentWeapon.Stats.Rank_30_RepairCost, 1)
+      if Rank_30_RepairCostChanged then
+        currentWeapon.Stats.Rank_30_RepairCost = tonumber(updatedRank_30_RepairCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end 
+
+      imgui.new_line()
+
+      -- Rank_40_Commission
+      Rank_40_CommissionChanged, updatedRank_40_Commission = imgui.input_text("Rank 40 Commission", currentWeapon.Stats.Rank_40_Commission, 1)
+      if Rank_40_CommissionChanged then
+        currentWeapon.Stats.Rank_40_Commission = tonumber(updatedRank_40_Commission)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_40_DurabilityCost
+      Rank_40_DurabilityCostChanged, updatedRank_40_DurabilityCost = imgui.input_text("Rank 40 DurabilityCost", currentWeapon.Stats.Rank_40_DurabilityCost, 1)
+      if Rank_40_DurabilityCostChanged then
+        currentWeapon.Stats.Rank_40_DurabilityCost = tonumber(updatedRank_40_DurabilityCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end
+
+      -- Rank_40_RepairCost
+      Rank_40_RepairCostChanged, updatedRank_40_RepairCost = imgui.input_text("Rank 40 RepairCost", currentWeapon.Stats.Rank_40_RepairCost, 1)
+      if Rank_40_RepairCostChanged then
+        currentWeapon.Stats.Rank_40_RepairCost = tonumber(updatedRank_40_RepairCost)
+        WeaponService.apply_weapon_stats(currentWeapon.Id)
+      end 
+
+    imgui.tree_pop()
+    end
+
     if imgui.tree_node("Exclusive") then
       
-      if currentWeapon.Name == "CMBT" then
+      if currentWeapon.Name == "CMBT" or currentWeapon.Name== "TAC_AO" then
 
         -- EX_SPEED
         EX_SPEEDChanged, updatedEX_SPEED = imgui.input_text("EX Speed", tostring(currentWeapon.Stats.EX_SPEED), 1)
@@ -2578,7 +3035,7 @@ local function draw_profile_editor_ui()
         
       end
 
-        if currentWeapon.Name == "FIGHT" then
+        if currentWeapon.Name == "FIGHT" or currentWeapon.Name== "ELITE_AO" then
           -- EX_DMG
           EX_DMGChanged, updatedEX_DMG = imgui.input_text("EX_DMG", currentWeapon.Stats.EX_DMG, 1)
           if EX_DMGChanged then
@@ -2624,6 +3081,7 @@ local function draw_profile_editor_ui()
             currentWeapon.Stats.EX_COST = tonumber(updatedEX_COST)
             WeaponService.apply_weapon_stats(currentWeapon.Id)
           end
+          
         
 
       end

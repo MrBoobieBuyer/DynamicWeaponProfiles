@@ -61,5 +61,17 @@
     "EX_WINCE": 2.0,
     "Knife_Speed": 1.0,
     "Polish_Cost": 1000,
-    "Repair_Cost": 2000
+    "Repair_Cost": 2000,
+    "Rank_10_Commission": 2000,
+    "Rank_10_DurabilityCost": 1.0,
+    "Rank_10_RepairCost": 500,
+    "Rank_20_Commission": 2000,
+    "Rank_20_DurabilityCost": 2.0,
+    "Rank_20_RepairCost": 1000,
+    "Rank_30_Commission": 2000,
+    "Rank_30_DurabilityCost": 2.0,
+    "Rank_30_RepairCost": 1000,
+    "Rank_40_Commission": 2000,
+    "Rank_40_DurabilityCost": 2.0,
+    "Rank_40_RepairCost": 1000
 }
