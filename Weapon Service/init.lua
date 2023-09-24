@@ -16,8 +16,8 @@ local RED9_AOOwnerEquipment = nil
 local TMP_AOOwnerEquipment = nil
 
 local Weapons = {
-	SG09R = { Id = 4000, Name = "SG09R", Type = "HG", Stats = nil },
-	PUN = { Id = 4001, Name = "PUN", Type = "HG", Stats = nil },
+  SG09R = { Id = 4000, Name = "SG09R", Type = "HG", Stats = nil },
+  PUN = { Id = 4001, Name = "PUN", Type = "HG", Stats = nil },
   RED9 = { Id = 4002, Name = "RED9", Type = "HG", CanEquipStock = true, StockEquipped = false, Stats = nil, StatsWithStock = nil },
   BT = { Id = 4003, Name = "BT", Type = "HG", Stats = nil },
   VP70 = { Id = 4004, Name = "VP70", Type = "HG", CanEquipStock = true, StockEquipped = false, Stats = nil, StatsWithStock = nil },
@@ -33,10 +33,10 @@ local Weapons = {
   BRB = { Id = 4500, Name = "BRB", Type = "MAG", Stats = nil },
   KIL7 = { Id = 4501, Name = "KIL7", Type = "MAG_SEMI", Stats = nil },
   HNDC = { Id = 4502, Name = "HNDC", Type = "MAG", Stats = nil },
-	BOLT = {Id = 4600, Name = "BOLT", Type = "BOLT", Stats = nil},
-	CMBT = { Id = 5000, Name = "CMBT", Type = "K", Stats = nil },
-	FIGHT = { Id = 5001, Name = "FIGHT", Type = "K", Stats = nil },
-	PRIM = { Id = 5006, Name = "PRIM", Type = "K", Stats = nil },
+  BOLT = {Id = 4600, Name = "BOLT", Type = "BOLT", Stats = nil},
+  CMBT = { Id = 5000, Name = "CMBT", Type = "K", Stats = nil },
+  FIGHT = { Id = 5001, Name = "FIGHT", Type = "K", Stats = nil },
+  PRIM = { Id = 5006, Name = "PRIM", Type = "K", Stats = nil },
   SEN9 = { Id = 6000, Name = "SEN9", Type = "HG", Stats = nil },
   SKUL = { Id = 6001, Name = "SKUL", Type = "SG", Stats = nil },
   M870_AO = { Id = 6100, Name = "M870_AO", Type = "SG_PUMP", Stats = nil },
