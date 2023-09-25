@@ -100,6 +100,7 @@ local Repair_IDs = {
 
 local function reset_values()
 	WeaponDataTables = {}
+  WeaponDataTables_2nd = {}
 	WeaponStages = {}
 	WeaponDetailStages = {}
 	PlayerInventory = {}
@@ -712,8 +713,9 @@ local function update_knife(weaponId, weaponStats)
 
   if RepairSettings then
     log.info("Found RepairSettings")
+    local length = RepairSettings:call("get_Count") - 1
 
-    for i=0,4 do
+    for i=0,length do
       local SettingItemId = RepairSettings[i]:get_field("_ItemId")
 
       if SettingItemId then
