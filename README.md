@@ -3,11 +3,10 @@
 ![Dynamic Weapon Profiles Screenshot](/screenshots/dwp_screenshot_1.jpg "Screenshot")
 
 ## What's New?
-* Added knife and bolt thrower support
-* Super Durable Knives checkbox
-* Free Knife Repairs checkbox
-* Combo boxes for ammo and reticle types
-* Bug fixes
+* Separate Ways campaign support
+* Separate Ways mercenaries support
+* Fixed repair costs for Super Durable Knives
+* Fixed Free Knife Repairs
 
 ## Profiles
 * Dynamic Weapon Profiles allows you to dynamically change the stats of all weapons by selecting the desired profile in a dropdown menu.
