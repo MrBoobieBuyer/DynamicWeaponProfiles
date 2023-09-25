@@ -139,7 +139,7 @@ local function set_weapon_profile(weaponProfile)
 		end
 	  end
 	end
-  end
+end
 
 local function set_scene(scene)
 	Scene = scene
