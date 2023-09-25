@@ -71,7 +71,8 @@ local Available_Weapons = {
   [31] = "Stingray (SW)",
   [32] = "Blast Crossbow (SW)",
   [33] = "Tactical Knife (SW)",
-  [34] = "Elite Knife (SW)"
+  [34] = "Elite Knife (SW)",
+  [35] = "XM96E1"
 }
 
 local Ammo_Types = {
@@ -313,6 +314,10 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.XBOW_AO.Stats.Recoil_YawMax = 0
     WeaponService.Weapons.XBOW_AO.Stats.Recoil_PitchMin = 0
     WeaponService.Weapons.XBOW_AO.Stats.Recoil_PitchMax = 0
+    WeaponService.Weapons.M9A3.Stats.Recoil_YawMin = 0
+    WeaponService.Weapons.M9A3.Stats.Recoil_YawMax = 0
+    WeaponService.Weapons.M9A3.Stats.Recoil_PitchMin = 0
+    WeaponService.Weapons.M9A3.Stats.Recoil_PitchMax = 0
   end
 
   if Weapon_Vars.No_Spread then
@@ -364,6 +369,8 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.SAR_AO.Stats.SMG_RandomFit = 0.0
     WeaponService.Weapons.XBOW_AO.Stats.SMG_Random = 0.0
     WeaponService.Weapons.XBOW_AO.Stats.SMG_RandomFit = 0.0
+    WeaponService.Weapons.M9A3.Stats.SMG_Random = 0.0
+    WeaponService.Weapons.M9A3.Stats.SMG_RandomFit = 0.0
   end
 
   if Weapon_Vars.Always_Focus then
@@ -411,6 +418,8 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.RED9_AO.Stats.Focus_HoldAdd = 1000
     WeaponService.Weapons.BT_AO.Stats.Focus_Limit = 0.0
     WeaponService.Weapons.BT_AO.Stats.Focus_HoldAdd = 1000
+    WeaponService.Weapons.M9A3.Stats.Focus_Limit = 0.0
+    WeaponService.Weapons.M9A3.Stats.Focus_HoldAdd = 1000
   end
 
   if Weapon_Vars.No_Ammo_Cost then
@@ -442,6 +451,7 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.BT_AO.Stats.BaseAmmoCost = 0
     WeaponService.Weapons.M870_AO.Stats.BaseAmmoCost = 0
     WeaponService.Weapons.XBOW_AO.Stats.BaseAmmoCost = 0
+    WeaponService.Weapons.M9A3.Stats.BaseAmmoCost = 0
   end
 
   if Weapon_Vars.Extra_Break then
@@ -590,6 +600,11 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.XBOW_AO.Stats.BRK_LVL_03 = 10
     WeaponService.Weapons.XBOW_AO.Stats.BRK_LVL_04 = 10
     WeaponService.Weapons.XBOW_AO.Stats.BRK_LVL_05 = 10
+    WeaponService.Weapons.M9A3.Stats.HG_BaseBRK = 10
+    WeaponService.Weapons.M9A3.Stats.BRK_LVL_02 = 10
+    WeaponService.Weapons.M9A3.Stats.BRK_LVL_03 = 10
+    WeaponService.Weapons.M9A3.Stats.BRK_LVL_04 = 10
+    WeaponService.Weapons.M9A3.Stats.BRK_LVL_05 = 10
   end
 
   if Weapon_Vars.Headshots_Kill then
@@ -659,6 +674,8 @@ local function SetWeapon_DMGValues()
     WeaponService.Weapons.M870_AO.Stats.SG_Around_CritRate_EX = 100
     WeaponService.Weapons.BT_AO.Stats.HG_CritRate = 100
     WeaponService.Weapons.BT_AO.Stats.HG_CritRateEX = 100
+    WeaponService.Weapons.M9A3.Stats.HG_CritRate = 100
+    WeaponService.Weapons.M9A3.Stats.HG_CritRateEX = 100
   end
 
   ----/// SLUGS TREE ///-----
@@ -1063,6 +1080,8 @@ local function draw_profile_editor_ui()
     currentWeapon = WeaponService.Weapons.TAC_AO
   elseif Selected_Weapon == 34 then
     currentWeapon = WeaponService.Weapons.ELITE_AO
+  elseif Selected_Weapon == 35 then
+    currentWeapon = WeaponService.Weapons.M9A3
   end
 
   imgui.new_line()
@@ -2349,7 +2368,7 @@ local function draw_profile_editor_ui()
     end
 
     -- Crit EX
-    if currentWeapon.Name== "SEN9" or currentWeapon.Name== "SG09R" or currentWeapon.Name== "KIL7" then
+    if currentWeapon.Name== "SEN9" or currentWeapon.Name== "SG09R" or currentWeapon.Name== "KIL7" or currentWeapon.Name== "M9A3" then
       if imgui.tree_node("Exclusive") then
         -- EX_CRIT
         EX_CRITChanged, updatedEX_CRIT = imgui.input_text("EX_CRIT", currentWeapon.Stats.EX_CRIT, 1)
@@ -3163,6 +3182,19 @@ local function create_new_weapon_profile()
       local noneCMBT = json.load_file("DWP\\None\\CMBT.json")
       local noneFIGHT = json.load_file("DWP\\None\\FIGHT.json")
       local nonePRIM = json.load_file("DWP\\None\\PRIM.json")
+      local noneM870_AO = json.load_file("DWP\\None\\M870_AO.json")
+      local noneCTW_AO = json.load_file("DWP\\None\\CTW_AO.json")
+      local noneXBOW_AO = json.load_file("DWP\\None\\XBOW_AO.json")
+      local noneBT_AO = json.load_file("DWP\\None\\BT_AO.json")
+      local noneTMP_AO = json.load_file("DWP\\None\\TMP_AO.json")
+      local noneSAR_AO = json.load_file("DWP\\None\\SAR_AO.json")
+      local noneTAC_AO = json.load_file("DWP\\None\\TAC_AO.json")
+      local noneELITE_AO = json.load_file("DWP\\None\\ELITE_AO.json")
+      local nonePUN_AO = json.load_file("DWP\\None\\PUN_AO.json")
+      local noneRED9_AO = json.load_file("DWP\\None\\RED9_AO.json")
+      local noneM1G_AO = json.load_file("DWP\\None\\M1G_AO.json")
+      local noneM9A3 = json.load_file("DWP\\None\\M9A3.json")
+
 
       json.dump_file("DWP\\" .. new_profile_name .. "\\SG09R.json", noneSG09R)
       json.dump_file("DWP\\" .. new_profile_name .. "\\PUN.json", nonePUN)
@@ -3187,6 +3219,19 @@ local function create_new_weapon_profile()
       json.dump_file("DWP\\" .. new_profile_name .. "\\CMBT.json", noneCMBT)
       json.dump_file("DWP\\" .. new_profile_name .. "\\FIGHT.json", noneFIGHT)
       json.dump_file("DWP\\" .. new_profile_name .. "\\PRIM.json", nonePRIM)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\M870_AO.json", noneM870_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\CTW_AO.json", noneCTW_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\XBOW_AO.json", noneXBOW_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\BT_AO.json", noneBT_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\TMP_AO.json", noneTMP_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\SAR_AO.json", noneSAR_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\TAC_AO.json", noneTAC_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\ELITE_AO.json", noneELITE_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\PUN_AO.json", nonePUN_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\RED9_AO.json", noneRED9_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\M1G_AO.json", noneM1G_AO)
+      json.dump_file("DWP\\" .. new_profile_name .. "\\M9A3.json", noneM9A3)
+
     end
 
     local count = 1
