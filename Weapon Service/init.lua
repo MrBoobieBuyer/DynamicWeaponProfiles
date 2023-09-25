@@ -134,7 +134,7 @@ local function set_weapon_profile(weaponProfile)
 		  Weapon.StatsWithStock = json.load_file("DWP\\" .. WeaponProfile .. "\\" .. Weapon.Name .. "Stock.json")
   
 		  if not Weapon.StatsWithStock then
-			Weapon.StatsWithStock = weaponStats
+        Weapon.StatsWithStock = weaponStats
 		  end
 		end
 	  end
